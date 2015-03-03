@@ -14,6 +14,7 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
     private Ice.ObjectPrx base = null;
     private Serveur.mp3Prx mp3 = null;
     private MediaPlayer mp = null;
+    private String nom = null;
 
     /**
      * Constructeur de la classe GestionMP3
@@ -24,6 +25,7 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
         ic = Ice.Util.initialize();
         base = ic.stringToProxy("SimpleServeurMP3:default -h shoud.ovh -p 10000");
         mp3 = Serveur.mp3PrxHelper.checkedCast(base);
+        mp = new MediaPlayer();
     }
 
     /**
@@ -32,25 +34,33 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
      */
     public void jouer(String nom)
     {
-        mp3.begin_jouerMP3("test");
-        /*String mp3 = "http://shoud.ovh:8090/go"+".mp3";
-        mp.reset();
+        this.nom = nom;
+        mp3.begin_jouerMP3(nom);
+    }
+    public void start() throws IOException {
+        String url = "http://shoud.ovh:8090/" + nom + ".mp3"; // your URL here
         mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        mp.setOnPreparedListener(this);
-        try {
-            mp.setDataSource(mp3);
-        } catch (IOException e) {
-            System.out.println(e);
-        }
-        mp.prepareAsync();
-        mp.start();*/
+        mp.setDataSource(url);
+        mp.prepare(); // might take long! (for buffering, etc)
+        mp.start();
+    }
+    public void pause()
+    {
+        mp.pause();
+    }
+    public void play()
+    {
+        mp.start();
+    }
+    public Boolean isPlaying() {
+        return mp != null && mp.isPlaying();
     }
     /**
      * Permet de rajouter un MP3
      */
-    public void ajouter()
+    public void ajouter(String nom)
     {
-        mp3.ajouterMP3("Toupou","test");
+        mp3.ajouterMP3(nom,"test");
     }
 
     /**
@@ -86,7 +96,8 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
             listMp3 = listMp3 + buf;
         return listMp3;
     }
-    public void onPrepared(MediaPlayer mp) {
+    public void onPrepared(MediaPlayer mp)
+    {
         mp.start();
     }
     protected void finalize ()

@@ -17,9 +17,17 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pas connecté"
-        android:id="@+id/tvConnect"
-        android:layout_alignParentTop="true"
+        android:text="non"
+        android:id="@+id/tvLecture"
+        android:layout_alignParentTop="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Play"
+        android:id="@+id/playStop"
+        android:onClick="btPlayStop"
+        android:layout_below="@+id/btTest"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
