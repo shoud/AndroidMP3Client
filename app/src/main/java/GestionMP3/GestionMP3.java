@@ -1,13 +1,19 @@
 package GestionMP3;
 
+import android.media.MediaPlayer;
+import android.media.AudioManager;
+
+import java.io.IOException;
+
 /**
  * Created by uapv1301804 on 03/03/15.
  */
-public class GestionMP3 {
+public class GestionMP3 implements MediaPlayer.OnPreparedListener {
 
     private Ice.Communicator ic = null;
     private Ice.ObjectPrx base = null;
     private Serveur.mp3Prx mp3 = null;
+    private MediaPlayer mp = null;
 
     /**
      * Constructeur de la classe GestionMP3
@@ -26,9 +32,19 @@ public class GestionMP3 {
      */
     public void jouer(String nom)
     {
-        mp3.jouerMP3("test");
+        mp3.begin_jouerMP3("test");
+        /*String mp3 = "http://shoud.ovh:8090/go"+".mp3";
+        mp.reset();
+        mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        mp.setOnPreparedListener(this);
+        try {
+            mp.setDataSource(mp3);
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+        mp.prepareAsync();
+        mp.start();*/
     }
-
     /**
      * Permet de rajouter un MP3
      */
@@ -69,6 +85,9 @@ public class GestionMP3 {
         for(String buf : mp3.listerMP3())
             listMp3 = listMp3 + buf;
         return listMp3;
+    }
+    public void onPrepared(MediaPlayer mp) {
+        mp.start();
     }
     protected void finalize ()
     {
