@@ -80,7 +80,6 @@ public class GestionMP3 {
             }catch (Exception e)
             {
                 System.err.println(e.getMessage());
-                //System.out.println("=========================>>>" + e);
                 return;
             }
         }
