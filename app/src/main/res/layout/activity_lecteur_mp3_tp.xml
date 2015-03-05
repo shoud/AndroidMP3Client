@@ -11,8 +11,11 @@
         android:text="TEST"
         android:id="@+id/btTest"
         android:onClick="btTest"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/tvLecture"
+        android:layout_toEndOf="@+id/tvLecture"
+        android:layout_marginLeft="54dp"
+        android:layout_marginStart="54dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -27,7 +30,30 @@
         android:text="Play"
         android:id="@+id/playStop"
         android:onClick="btPlayStop"
-        android:layout_below="@+id/btTest"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/btTest"
+        android:layout_toEndOf="@+id/btTest"
+        android:layout_marginLeft="58dp"
+        android:layout_marginStart="58dp" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lvMusique"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/btTest"
+        android:layout_below="@+id/btRafraichir" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Refraichir"
+        android:id="@+id/btRafraichir"
+        android:onClick="btRafraichir"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

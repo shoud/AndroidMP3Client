@@ -4,6 +4,7 @@ import android.media.MediaPlayer;
 import android.media.AudioManager;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by uapv1301804 on 03/03/15.
@@ -89,12 +90,9 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
      * Permet de récupérer la liste des MP3
      * @return listMp3 La liste en string des mp3
      */
-    public String lister()
+    public String[] lister()
     {
-        String listMp3 = "";
-        for(String buf : mp3.listerMP3())
-            listMp3 = listMp3 + buf;
-        return listMp3;
+        return mp3.listerMP3();
     }
     public void onPrepared(MediaPlayer mp)
     {
