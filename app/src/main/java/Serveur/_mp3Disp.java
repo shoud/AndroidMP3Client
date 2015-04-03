@@ -75,9 +75,14 @@ public abstract class _mp3Disp extends Ice.ObjectImpl implements mp3
         ajouterMP3(nom, url, null);
     }
 
-    public final void jouerMP3(String nom)
+    public final String getToken()
     {
-        jouerMP3(nom, null);
+        return getToken(null);
+    }
+
+    public final String jouerMP3(String nom)
+    {
+        return jouerMP3(nom, null);
     }
 
     public final String[] listerMP3()
@@ -85,9 +90,19 @@ public abstract class _mp3Disp extends Ice.ObjectImpl implements mp3
         return listerMP3(null);
     }
 
+    public final void play()
+    {
+        play(null);
+    }
+
     public final boolean rechercherMP3(String nom)
     {
         return rechercherMP3(nom, null);
+    }
+
+    public final void stop()
+    {
+        stop(null);
     }
 
     public final boolean supprimerMP3(String nom)
@@ -144,7 +159,38 @@ public abstract class _mp3Disp extends Ice.ObjectImpl implements mp3
         String nom;
         nom = __is.readString();
         __inS.endReadParams();
-        __obj.jouerMP3(nom, __current);
+        String __ret = __obj.jouerMP3(nom, __current);
+        IceInternal.BasicStream __os = __inS.__startWriteParams(Ice.FormatType.DefaultFormat);
+        __os.writeString(__ret);
+        __inS.__endWriteParams(true);
+        return Ice.DispatchStatus.DispatchOK;
+    }
+
+    public static Ice.DispatchStatus ___getToken(mp3 __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    {
+        __checkMode(Ice.OperationMode.Normal, __current.mode);
+        __inS.readEmptyParams();
+        String __ret = __obj.getToken(__current);
+        IceInternal.BasicStream __os = __inS.__startWriteParams(Ice.FormatType.DefaultFormat);
+        __os.writeString(__ret);
+        __inS.__endWriteParams(true);
+        return Ice.DispatchStatus.DispatchOK;
+    }
+
+    public static Ice.DispatchStatus ___play(mp3 __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    {
+        __checkMode(Ice.OperationMode.Normal, __current.mode);
+        __inS.readEmptyParams();
+        __obj.play(__current);
+        __inS.__writeEmptyParams();
+        return Ice.DispatchStatus.DispatchOK;
+    }
+
+    public static Ice.DispatchStatus ___stop(mp3 __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    {
+        __checkMode(Ice.OperationMode.Normal, __current.mode);
+        __inS.readEmptyParams();
+        __obj.stop(__current);
         __inS.__writeEmptyParams();
         return Ice.DispatchStatus.DispatchOK;
     }
@@ -163,13 +209,16 @@ public abstract class _mp3Disp extends Ice.ObjectImpl implements mp3
     private final static String[] __all =
     {
         "ajouterMP3",
+        "getToken",
         "ice_id",
         "ice_ids",
         "ice_isA",
         "ice_ping",
         "jouerMP3",
         "listerMP3",
+        "play",
         "rechercherMP3",
+        "stop",
         "supprimerMP3"
     };
 
@@ -189,33 +238,45 @@ public abstract class _mp3Disp extends Ice.ObjectImpl implements mp3
             }
             case 1:
             {
-                return ___ice_id(this, in, __current);
+                return ___getToken(this, in, __current);
             }
             case 2:
             {
-                return ___ice_ids(this, in, __current);
+                return ___ice_id(this, in, __current);
             }
             case 3:
             {
-                return ___ice_isA(this, in, __current);
+                return ___ice_ids(this, in, __current);
             }
             case 4:
             {
-                return ___ice_ping(this, in, __current);
+                return ___ice_isA(this, in, __current);
             }
             case 5:
             {
-                return ___jouerMP3(this, in, __current);
+                return ___ice_ping(this, in, __current);
             }
             case 6:
             {
-                return ___listerMP3(this, in, __current);
+                return ___jouerMP3(this, in, __current);
             }
             case 7:
             {
-                return ___rechercherMP3(this, in, __current);
+                return ___listerMP3(this, in, __current);
             }
             case 8:
+            {
+                return ___play(this, in, __current);
+            }
+            case 9:
+            {
+                return ___rechercherMP3(this, in, __current);
+            }
+            case 10:
+            {
+                return ___stop(this, in, __current);
+            }
+            case 11:
             {
                 return ___supprimerMP3(this, in, __current);
             }

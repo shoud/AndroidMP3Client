@@ -20,21 +20,6 @@
 
 package Serveur;
 
-public interface _mp3OperationsNC
+public abstract class Callback_mp3_play extends Ice.OnewayCallback
 {
-    void ajouterMP3(String nom, String url);
-
-    boolean supprimerMP3(String nom);
-
-    boolean rechercherMP3(String nom);
-
-    String jouerMP3(String nom);
-
-    String getToken();
-
-    void play();
-
-    void stop();
-
-    String[] listerMP3();
 }

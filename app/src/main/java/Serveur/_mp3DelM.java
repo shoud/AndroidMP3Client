@@ -70,7 +70,46 @@ public final class _mp3DelM extends Ice._ObjectDelM implements _mp3Del
         }
     }
 
-    public void
+    public String
+    getToken(java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
+        throws IceInternal.LocalExceptionWrapper
+    {
+        IceInternal.Outgoing __og = __handler.getOutgoing("getToken", Ice.OperationMode.Normal, __ctx, __observer);
+        try
+        {
+            __og.writeEmptyParams();
+            boolean __ok = __og.invoke();
+            try
+            {
+                if(!__ok)
+                {
+                    try
+                    {
+                        __og.throwUserException();
+                    }
+                    catch(Ice.UserException __ex)
+                    {
+                        throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
+                    }
+                }
+                IceInternal.BasicStream __is = __og.startReadParams();
+                String __ret;
+                __ret = __is.readString();
+                __og.endReadParams();
+                return __ret;
+            }
+            catch(Ice.LocalException __ex)
+            {
+                throw new IceInternal.LocalExceptionWrapper(__ex, false);
+            }
+        }
+        finally
+        {
+            __handler.reclaimOutgoing(__og);
+        }
+    }
+
+    public String
     jouerMP3(String nom, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
         throws IceInternal.LocalExceptionWrapper
     {
@@ -88,27 +127,28 @@ public final class _mp3DelM extends Ice._ObjectDelM implements _mp3Del
                 __og.abort(__ex);
             }
             boolean __ok = __og.invoke();
-            if(__og.hasResponse())
+            try
             {
-                try
+                if(!__ok)
                 {
-                    if(!__ok)
+                    try
                     {
-                        try
-                        {
-                            __og.throwUserException();
-                        }
-                        catch(Ice.UserException __ex)
-                        {
-                            throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
-                        }
+                        __og.throwUserException();
                     }
-                    __og.readEmptyParams();
+                    catch(Ice.UserException __ex)
+                    {
+                        throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
+                    }
                 }
-                catch(Ice.LocalException __ex)
-                {
-                    throw new IceInternal.LocalExceptionWrapper(__ex, false);
-                }
+                IceInternal.BasicStream __is = __og.startReadParams();
+                String __ret;
+                __ret = __is.readString();
+                __og.endReadParams();
+                return __ret;
+            }
+            catch(Ice.LocalException __ex)
+            {
+                throw new IceInternal.LocalExceptionWrapper(__ex, false);
             }
         }
         finally
@@ -148,6 +188,44 @@ public final class _mp3DelM extends Ice._ObjectDelM implements _mp3Del
             catch(Ice.LocalException __ex)
             {
                 throw new IceInternal.LocalExceptionWrapper(__ex, false);
+            }
+        }
+        finally
+        {
+            __handler.reclaimOutgoing(__og);
+        }
+    }
+
+    public void
+    play(java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
+        throws IceInternal.LocalExceptionWrapper
+    {
+        IceInternal.Outgoing __og = __handler.getOutgoing("play", Ice.OperationMode.Normal, __ctx, __observer);
+        try
+        {
+            __og.writeEmptyParams();
+            boolean __ok = __og.invoke();
+            if(__og.hasResponse())
+            {
+                try
+                {
+                    if(!__ok)
+                    {
+                        try
+                        {
+                            __og.throwUserException();
+                        }
+                        catch(Ice.UserException __ex)
+                        {
+                            throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
+                        }
+                    }
+                    __og.readEmptyParams();
+                }
+                catch(Ice.LocalException __ex)
+                {
+                    throw new IceInternal.LocalExceptionWrapper(__ex, false);
+                }
             }
         }
         finally
@@ -196,6 +274,44 @@ public final class _mp3DelM extends Ice._ObjectDelM implements _mp3Del
             catch(Ice.LocalException __ex)
             {
                 throw new IceInternal.LocalExceptionWrapper(__ex, false);
+            }
+        }
+        finally
+        {
+            __handler.reclaimOutgoing(__og);
+        }
+    }
+
+    public void
+    stop(java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
+        throws IceInternal.LocalExceptionWrapper
+    {
+        IceInternal.Outgoing __og = __handler.getOutgoing("stop", Ice.OperationMode.Normal, __ctx, __observer);
+        try
+        {
+            __og.writeEmptyParams();
+            boolean __ok = __og.invoke();
+            if(__og.hasResponse())
+            {
+                try
+                {
+                    if(!__ok)
+                    {
+                        try
+                        {
+                            __og.throwUserException();
+                        }
+                        catch(Ice.UserException __ex)
+                        {
+                            throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
+                        }
+                    }
+                    __og.readEmptyParams();
+                }
+                catch(Ice.LocalException __ex)
+                {
+                    throw new IceInternal.LocalExceptionWrapper(__ex, false);
+                }
             }
         }
         finally

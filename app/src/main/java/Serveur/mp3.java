@@ -23,5 +23,5 @@ package Serveur;
 public interface mp3 extends Ice.Object,
                              _mp3Operations, _mp3OperationsNC
 {
-    public static final long serialVersionUID = -804007421L;
+    public static final long serialVersionUID = -6424626538467831293L;
 }

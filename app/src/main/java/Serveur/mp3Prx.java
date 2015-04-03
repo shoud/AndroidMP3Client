@@ -76,9 +76,9 @@ public interface mp3Prx extends Ice.ObjectPrx
 
     public boolean end_rechercherMP3(Ice.AsyncResult __result);
 
-    public void jouerMP3(String nom);
+    public String jouerMP3(String nom);
 
-    public void jouerMP3(String nom, java.util.Map<String, String> __ctx);
+    public String jouerMP3(String nom, java.util.Map<String, String> __ctx);
 
     public Ice.AsyncResult begin_jouerMP3(String nom);
 
@@ -92,7 +92,61 @@ public interface mp3Prx extends Ice.ObjectPrx
 
     public Ice.AsyncResult begin_jouerMP3(String nom, java.util.Map<String, String> __ctx, Callback_mp3_jouerMP3 __cb);
 
-    public void end_jouerMP3(Ice.AsyncResult __result);
+    public String end_jouerMP3(Ice.AsyncResult __result);
+
+    public String getToken();
+
+    public String getToken(java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_getToken();
+
+    public Ice.AsyncResult begin_getToken(java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_getToken(Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_getToken(java.util.Map<String, String> __ctx, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_getToken(Callback_mp3_getToken __cb);
+
+    public Ice.AsyncResult begin_getToken(java.util.Map<String, String> __ctx, Callback_mp3_getToken __cb);
+
+    public String end_getToken(Ice.AsyncResult __result);
+
+    public void play();
+
+    public void play(java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_play();
+
+    public Ice.AsyncResult begin_play(java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_play(Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_play(java.util.Map<String, String> __ctx, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_play(Callback_mp3_play __cb);
+
+    public Ice.AsyncResult begin_play(java.util.Map<String, String> __ctx, Callback_mp3_play __cb);
+
+    public void end_play(Ice.AsyncResult __result);
+
+    public void stop();
+
+    public void stop(java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_stop();
+
+    public Ice.AsyncResult begin_stop(java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_stop(Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_stop(java.util.Map<String, String> __ctx, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_stop(Callback_mp3_stop __cb);
+
+    public Ice.AsyncResult begin_stop(java.util.Map<String, String> __ctx, Callback_mp3_stop __cb);
+
+    public void end_stop(Ice.AsyncResult __result);
 
     public String[] listerMP3();
 

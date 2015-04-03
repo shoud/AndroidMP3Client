@@ -16,6 +16,7 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
     private Serveur.mp3Prx mp3 = null;
     private MediaPlayer mp = null;
     private String nom = null;
+    private String token = "";
 
     /**
      * Constructeur de la classe GestionMP3
@@ -33,18 +34,21 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
      * Permet de lancer la lecture d'un MP3
      * @param nom Le nom du mp3 à lancer
      */
-    public void jouer(String nom)
+    public void jouer(String nom) throws IOException
     {
+
+        mp.reset();
         this.nom = nom;
-        mp3.begin_jouerMP3(nom);
-    }
-    public void start() throws IOException {
-        String url = "http://shoud.ovh:8090/" + nom + ".mp3"; // your URL here
+        mp3.jouerMP3(nom);
+        this.token = mp3.getToken();
+        mp3.play();
+        String url = "http://shoud.ovh:8090/" + token + ".mp3"; // your URL here
         mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
         mp.setDataSource(url);
         mp.prepare(); // might take long! (for buffering, etc)
         mp.start();
     }
+
     public void pause()
     {
         mp.pause();

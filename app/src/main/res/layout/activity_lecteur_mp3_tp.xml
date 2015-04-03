@@ -8,52 +8,43 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TEST"
-        android:id="@+id/btTest"
-        android:onClick="btTest"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/tvLecture"
-        android:layout_toEndOf="@+id/tvLecture"
-        android:layout_marginLeft="54dp"
-        android:layout_marginStart="54dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="non"
-        android:id="@+id/tvLecture"
-        android:layout_alignParentTop="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="Play"
         android:id="@+id/playStop"
         android:onClick="btPlayStop"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/btTest"
-        android:layout_toEndOf="@+id/btTest"
-        android:layout_marginLeft="58dp"
-        android:layout_marginStart="58dp" />
+        android:layout_centerHorizontal="true" />
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/lvMusique"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/btTest"
-        android:layout_below="@+id/btRafraichir" />
+        android:layout_above="@+id/playStop"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/textView"
+        android:background="#ff7eb9ff"
+        android:enabled="true" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Refraichir"
-        android:id="@+id/btRafraichir"
-        android:onClick="btRafraichir"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Recherche"
+        android:id="@+id/textView"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/lvMusique"
+        android:layout_alignEnd="@+id/lvMusique"
+        android:background="#ff6bffce" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:layout_above="@+id/lvMusique"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ff0604ff"
+        android:background="#ff418cff" />
 
 </RelativeLayout>

@@ -31,7 +31,16 @@ public interface _mp3Del extends Ice._ObjectDel
     boolean rechercherMP3(String nom, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __obsv)
         throws IceInternal.LocalExceptionWrapper;
 
-    void jouerMP3(String nom, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __obsv)
+    String jouerMP3(String nom, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __obsv)
+        throws IceInternal.LocalExceptionWrapper;
+
+    String getToken(java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __obsv)
+        throws IceInternal.LocalExceptionWrapper;
+
+    void play(java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __obsv)
+        throws IceInternal.LocalExceptionWrapper;
+
+    void stop(java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __obsv)
         throws IceInternal.LocalExceptionWrapper;
 
     String[] listerMP3(java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __obsv)

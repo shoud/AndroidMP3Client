@@ -28,7 +28,13 @@ public interface _mp3Operations
 
     boolean rechercherMP3(String nom, Ice.Current __current);
 
-    void jouerMP3(String nom, Ice.Current __current);
+    String jouerMP3(String nom, Ice.Current __current);
+
+    String getToken(Ice.Current __current);
+
+    void play(Ice.Current __current);
+
+    void stop(Ice.Current __current);
 
     String[] listerMP3(Ice.Current __current);
 }
