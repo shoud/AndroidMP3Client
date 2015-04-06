@@ -2,6 +2,7 @@ package com.example.uapv1301804.lecteurmp3tp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -73,16 +74,19 @@ public class LecteurMP3TP extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        Button controlButton = (Button)findViewById(R.id.playStop);
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    /**
+     * Gestion du bouton play/pause pour pouvoir arrêter la musique
+     * @param controlView
+     * @throws IOException
+     */
     public void btPlayStop(View controlView) throws IOException {
-        //gestionMP3.start();
         Button controlButton = (Button)findViewById(R.id.playStop);
 
         if(controlButton.getText().equals("Play")) {
@@ -94,6 +98,34 @@ public class LecteurMP3TP extends Activity {
         }
 
     }
+
+    public void btInformation(View controlView)
+    {
+        final Button loginButton = (Button) findViewById(R.id.btInfo);
+        loginButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LecteurMP3TP.this, ActivityMusique.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void btAjouter(View controlView)
+    {
+        final Button loginButton = (Button) findViewById(R.id.btAjouter);
+        loginButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LecteurMP3TP.this, ActivityAjouter.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+
     public void btRafraichir(View controleView)
     {
         //Récupération de la listeview de musique
