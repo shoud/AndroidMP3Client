@@ -12,8 +12,9 @@
         android:id="@+id/playStop"
         android:onClick="btPlayStop"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="#ffd9fffa" />
+        android:background="#ffd9fffa"
+        android:layout_toRightOf="@+id/btInfo"
+        android:layout_toEndOf="@+id/btInfo" />
 
     <ListView
         android:layout_width="wrap_content"
@@ -56,7 +57,6 @@
         android:id="@+id/btInfo"
         android:onClick="btInformation"
         android:layout_below="@+id/lvMusique"
-        android:layout_toLeftOf="@+id/playStop"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:background="#fffaffbe" />
@@ -69,8 +69,17 @@
         android:onClick="btAjouter"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/playStop"
+        android:background="#ffeeffb7" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageBtSupprimer"
+        android:onClick="btSupprimer"
+        android:layout_below="@+id/lvMusique"
+        android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/lvMusique"
         android:layout_alignEnd="@+id/lvMusique"
-        android:background="#ffeeffb7" />
+        android:src="@android:drawable/ic_delete" />
 
 </RelativeLayout>

@@ -9,9 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import GestionMP3.FichierMP3;
+
 
 public class ActivityMusique extends Activity {
 
+    private FichierMP3 fichierMP3 = null;
     private TextView tvTitre = null;
     private TextView tvAlbum = null;
     private TextView tvCompo = null;
@@ -23,10 +26,19 @@ public class ActivityMusique extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity_musique);
 
+        fichierMP3 = (FichierMP3) getIntent().getSerializableExtra("FichierMP3");
+        System.out.println(fichierMP3.getNom());
+
+
         tvTitre = (TextView) findViewById(R.id.tTitre);
         tvAlbum = (TextView) findViewById(R.id.tAlbum);
         tvCompo = (TextView) findViewById(R.id.tCompo);
         tvChanteur = (TextView) findViewById(R.id.tChanteur);
+
+        if(fichierMP3 != null)
+        {
+           tvTitre.setText(fichierMP3.getNom());
+        }
     }
 
 

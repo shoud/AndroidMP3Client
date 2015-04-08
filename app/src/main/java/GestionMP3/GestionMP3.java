@@ -4,6 +4,7 @@ import android.media.MediaPlayer;
 import android.media.AudioManager;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -81,15 +82,17 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
 
     /**
      * Permet de supprimer un MP3 sur le serveur
-     * @param nom Le nom de l'MP3 à supprimer
      * @return true Si le mp3 a pu être supprimé
      * @return false si le mp3 n'a pas pu être supprimé.
      */
-    public boolean supprimer(String nom)
+    public boolean supprimer()
     {
-        return mp3.supprimerMP3("Poutou");
+        return mp3.supprimerMP3(this.nom);
     }
-
+    public String getNom()
+    {
+        return this.nom;
+    }
     /**
      * Permet de récupérer la liste des MP3
      * @return listMp3 La liste en string des mp3

@@ -10,13 +10,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import GestionMP3.GestionMP3;
+import GestionMP3.FichierMP3;
 
 
 public class LecteurMP3TP extends Activity {
@@ -107,6 +108,7 @@ public class LecteurMP3TP extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LecteurMP3TP.this, ActivityMusique.class);
+                intent.putExtra("FichierMP3", new FichierMP3(gestionMP3.getNom()));
                 startActivity(intent);
             }
         });
@@ -125,6 +127,24 @@ public class LecteurMP3TP extends Activity {
         });
     }
 
+    public void btSupprimer(View controlView)
+    {
+        final ImageButton imageButton = (ImageButton) findViewById(R.id.imageBtSupprimer);
+        if(gestionMP3.supprimer())
+        {
+            //Récupération de la listeview de musique
+            ListView lv = (ListView)findViewById(R.id.lvMusique);
+            context = this;
+            //On récupère la liste de musique
+            for(String morceau : gestionMP3.lister())
+            {
+                if(!listMusique.contains(morceau))
+                    listMusique.add(morceau);
+            }
+            adapter = new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1,listMusique);
+            lv.setAdapter(adapter);
+        }
+    }
 
     public void btRafraichir(View controleView)
     {
