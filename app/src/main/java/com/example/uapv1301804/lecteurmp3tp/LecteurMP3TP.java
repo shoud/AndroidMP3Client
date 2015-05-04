@@ -135,6 +135,7 @@ public class LecteurMP3TP extends Activity {
             //Récupération de la listeview de musique
             ListView lv = (ListView)findViewById(R.id.lvMusique);
             context = this;
+            listMusique.clear();
             //On récupère la liste de musique
             for(String morceau : gestionMP3.lister())
             {
