@@ -75,6 +75,11 @@ public abstract class _mp3Disp extends Ice.ObjectImpl implements mp3
         ajouterMP3(nom, url, null);
     }
 
+    public final void envoyerMusique(String nom, byte[] musique)
+    {
+        envoyerMusique(nom, musique, null);
+    }
+
     public final String getToken()
     {
         return getToken(null);
@@ -195,6 +200,20 @@ public abstract class _mp3Disp extends Ice.ObjectImpl implements mp3
         return Ice.DispatchStatus.DispatchOK;
     }
 
+    public static Ice.DispatchStatus ___envoyerMusique(mp3 __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    {
+        __checkMode(Ice.OperationMode.Normal, __current.mode);
+        IceInternal.BasicStream __is = __inS.startReadParams();
+        String nom;
+        byte[] musique;
+        nom = __is.readString();
+        musique = MusiqueByteHelper.read(__is);
+        __inS.endReadParams();
+        __obj.envoyerMusique(nom, musique, __current);
+        __inS.__writeEmptyParams();
+        return Ice.DispatchStatus.DispatchOK;
+    }
+
     public static Ice.DispatchStatus ___listerMP3(mp3 __obj, IceInternal.Incoming __inS, Ice.Current __current)
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
@@ -209,6 +228,7 @@ public abstract class _mp3Disp extends Ice.ObjectImpl implements mp3
     private final static String[] __all =
     {
         "ajouterMP3",
+        "envoyerMusique",
         "getToken",
         "ice_id",
         "ice_ids",
@@ -238,45 +258,49 @@ public abstract class _mp3Disp extends Ice.ObjectImpl implements mp3
             }
             case 1:
             {
-                return ___getToken(this, in, __current);
+                return ___envoyerMusique(this, in, __current);
             }
             case 2:
             {
-                return ___ice_id(this, in, __current);
+                return ___getToken(this, in, __current);
             }
             case 3:
             {
-                return ___ice_ids(this, in, __current);
+                return ___ice_id(this, in, __current);
             }
             case 4:
             {
-                return ___ice_isA(this, in, __current);
+                return ___ice_ids(this, in, __current);
             }
             case 5:
             {
-                return ___ice_ping(this, in, __current);
+                return ___ice_isA(this, in, __current);
             }
             case 6:
             {
-                return ___jouerMP3(this, in, __current);
+                return ___ice_ping(this, in, __current);
             }
             case 7:
             {
-                return ___listerMP3(this, in, __current);
+                return ___jouerMP3(this, in, __current);
             }
             case 8:
             {
-                return ___play(this, in, __current);
+                return ___listerMP3(this, in, __current);
             }
             case 9:
             {
-                return ___rechercherMP3(this, in, __current);
+                return ___play(this, in, __current);
             }
             case 10:
             {
-                return ___stop(this, in, __current);
+                return ___rechercherMP3(this, in, __current);
             }
             case 11:
+            {
+                return ___stop(this, in, __current);
+            }
+            case 12:
             {
                 return ___supprimerMP3(this, in, __current);
             }

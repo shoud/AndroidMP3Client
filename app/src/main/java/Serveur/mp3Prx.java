@@ -148,6 +148,24 @@ public interface mp3Prx extends Ice.ObjectPrx
 
     public void end_stop(Ice.AsyncResult __result);
 
+    public void envoyerMusique(String nom, byte[] musique);
+
+    public void envoyerMusique(String nom, byte[] musique, java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_envoyerMusique(String nom, byte[] musique);
+
+    public Ice.AsyncResult begin_envoyerMusique(String nom, byte[] musique, java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_envoyerMusique(String nom, byte[] musique, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_envoyerMusique(String nom, byte[] musique, java.util.Map<String, String> __ctx, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_envoyerMusique(String nom, byte[] musique, Callback_mp3_envoyerMusique __cb);
+
+    public Ice.AsyncResult begin_envoyerMusique(String nom, byte[] musique, java.util.Map<String, String> __ctx, Callback_mp3_envoyerMusique __cb);
+
+    public void end_envoyerMusique(Ice.AsyncResult __result);
+
     public String[] listerMP3();
 
     public String[] listerMP3(java.util.Map<String, String> __ctx);

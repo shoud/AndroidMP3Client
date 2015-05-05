@@ -36,5 +36,7 @@ public interface _mp3OperationsNC
 
     void stop();
 
+    void envoyerMusique(String nom, byte[] musique);
+
     String[] listerMP3();
 }

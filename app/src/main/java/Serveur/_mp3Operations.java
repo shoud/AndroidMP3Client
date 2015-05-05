@@ -36,5 +36,7 @@ public interface _mp3Operations
 
     void stop(Ice.Current __current);
 
+    void envoyerMusique(String nom, byte[] musique, Ice.Current __current);
+
     String[] listerMP3(Ice.Current __current);
 }

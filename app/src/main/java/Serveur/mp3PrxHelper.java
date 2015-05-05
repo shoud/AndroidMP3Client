@@ -127,6 +127,111 @@ public final class mp3PrxHelper extends Ice.ObjectPrxHelperBase implements mp3Pr
         __end(__result, __ajouterMP3_name);
     }
 
+    private static final String __envoyerMusique_name = "envoyerMusique";
+
+    public void envoyerMusique(String nom, byte[] musique)
+    {
+        envoyerMusique(nom, musique, null, false);
+    }
+
+    public void envoyerMusique(String nom, byte[] musique, java.util.Map<String, String> __ctx)
+    {
+        envoyerMusique(nom, musique, __ctx, true);
+    }
+
+    private void envoyerMusique(String nom, byte[] musique, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+    {
+        if(__explicitCtx && __ctx == null)
+        {
+            __ctx = _emptyContext;
+        }
+        final Ice.Instrumentation.InvocationObserver __observer = IceInternal.ObserverHelper.get(this, "envoyerMusique", __ctx);
+        int __cnt = 0;
+        try
+        {
+            while(true)
+            {
+                Ice._ObjectDel __delBase = null;
+                try
+                {
+                    __delBase = __getDelegate(false);
+                    _mp3Del __del = (_mp3Del)__delBase;
+                    __del.envoyerMusique(nom, musique, __ctx, __observer);
+                    return;
+                }
+                catch(IceInternal.LocalExceptionWrapper __ex)
+                {
+                    __handleExceptionWrapper(__delBase, __ex, __observer);
+                }
+                catch(Ice.LocalException __ex)
+                {
+                    __cnt = __handleException(__delBase, __ex, null, __cnt, __observer);
+                }
+            }
+        }
+        finally
+        {
+            if(__observer != null)
+            {
+                __observer.detach();
+            }
+        }
+    }
+
+    public Ice.AsyncResult begin_envoyerMusique(String nom, byte[] musique)
+    {
+        return begin_envoyerMusique(nom, musique, null, false, null);
+    }
+
+    public Ice.AsyncResult begin_envoyerMusique(String nom, byte[] musique, java.util.Map<String, String> __ctx)
+    {
+        return begin_envoyerMusique(nom, musique, __ctx, true, null);
+    }
+
+    public Ice.AsyncResult begin_envoyerMusique(String nom, byte[] musique, Ice.Callback __cb)
+    {
+        return begin_envoyerMusique(nom, musique, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_envoyerMusique(String nom, byte[] musique, java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    {
+        return begin_envoyerMusique(nom, musique, __ctx, true, __cb);
+    }
+
+    public Ice.AsyncResult begin_envoyerMusique(String nom, byte[] musique, Callback_mp3_envoyerMusique __cb)
+    {
+        return begin_envoyerMusique(nom, musique, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_envoyerMusique(String nom, byte[] musique, java.util.Map<String, String> __ctx, Callback_mp3_envoyerMusique __cb)
+    {
+        return begin_envoyerMusique(nom, musique, __ctx, true, __cb);
+    }
+
+    private Ice.AsyncResult begin_envoyerMusique(String nom, byte[] musique, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
+    {
+        IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __envoyerMusique_name, __cb);
+        try
+        {
+            __result.__prepare(__envoyerMusique_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
+            IceInternal.BasicStream __os = __result.__startWriteParams(Ice.FormatType.DefaultFormat);
+            __os.writeString(nom);
+            MusiqueByteHelper.write(__os, musique);
+            __result.__endWriteParams();
+            __result.__send(true);
+        }
+        catch(Ice.LocalException __ex)
+        {
+            __result.__exceptionAsync(__ex);
+        }
+        return __result;
+    }
+
+    public void end_envoyerMusique(Ice.AsyncResult __result)
+    {
+        __end(__result, __envoyerMusique_name);
+    }
+
     private static final String __getToken_name = "getToken";
 
     public String getToken()

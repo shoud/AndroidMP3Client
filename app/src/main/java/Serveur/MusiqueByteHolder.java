@@ -20,23 +20,18 @@
 
 package Serveur;
 
-public abstract class Callback_mp3_getToken extends Ice.TwowayCallback
+public final class MusiqueByteHolder
 {
-    public abstract void response(String __ret);
-
-    public final void __completed(Ice.AsyncResult __result)
+    public
+    MusiqueByteHolder()
     {
-        mp3Prx __proxy = (mp3Prx)__result.getProxy();
-        String __ret = null;
-        try
-        {
-            __ret = __proxy.end_getToken(__result);
-        }
-        catch(Ice.LocalException __ex)
-        {
-            exception(__ex);
-            return;
-        }
-        response(__ret);
     }
+
+    public
+    MusiqueByteHolder(byte[] value)
+    {
+        this.value = value;
+    }
+
+    public byte[] value;
 }

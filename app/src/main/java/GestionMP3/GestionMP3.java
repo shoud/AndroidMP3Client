@@ -19,6 +19,11 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
     private String nom = null;
     private String token = "";
 
+    public Serveur.mp3Prx getMp3()
+    {
+        return mp3;
+    }
+
     /**
      * Constructeur de la classe GestionMP3
      * Il permet de créer la connexion avec le serveur.
