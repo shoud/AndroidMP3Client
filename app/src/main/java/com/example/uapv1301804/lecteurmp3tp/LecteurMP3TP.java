@@ -4,14 +4,19 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,10 +25,11 @@ import GestionMP3.GestionMP3;
 import GestionMP3.FichierMP3;
 
 
-public class LecteurMP3TP extends Activity {
+public class LecteurMP3TP extends Activity implements View.OnKeyListener {
 
     private GestionMP3 gestionMP3 = null;
     private ArrayList<String> listMusique = new ArrayList<String>();
+    private ArrayList<String> listRecherche = new ArrayList<String>();
     private ArrayAdapter<String> adapter;
     private Context context;
     //private ListView lv = (ListView)findViewById(R.id.lvMusique);
@@ -59,6 +65,29 @@ public class LecteurMP3TP extends Activity {
                 }
             }
         });
+        EditText editText1 = (EditText) findViewById(R.id.tvRecherche);
+        editText1.setOnKeyListener(this);
+        /*final TextView textView = (TextView) findViewById(R.id.tvRecherche);
+        textView.setOnFocusChangeListener(new View.OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                System.out.println("CCCCCCCCCCCCCCOOOOOOOOOOOOOOUUUUUUU");
+
+                if(hasFocus)
+                {
+                    String recherche = textView.getText().toString();
+                    System.out.println(">>>>>>>>>>>>>>>>> " + recherche);
+                    if(listMusique.contains(recherche))
+                    {
+                        listRecherche.clear();
+                        listRecherche.add(recherche);
+                        adapter = new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1,listRecherche);
+                        lv.setAdapter(adapter);
+                    }
+                }
+            }
+        });*/
 
     }
 
@@ -160,5 +189,51 @@ public class LecteurMP3TP extends Activity {
         }
         adapter = new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1,listMusique);
         lv.setAdapter(adapter);
+    }
+
+    public void tvRecherche(View controleView)
+    {
+        final TextView textView = (TextView) findViewById(R.id.tvRecherche);
+        System.out.println(textView.getText().toString());
+    }
+
+    @Override
+    public boolean onKey(View view, int keyCode, KeyEvent event) {
+        //On récupère le editText qui a déclenché l'évenement
+        EditText myEditText = (EditText) view;
+        ListView lv = (ListView)findViewById(R.id.lvMusique);
+
+        if (keyCode == EditorInfo.IME_ACTION_SEARCH ||
+                keyCode == EditorInfo.IME_ACTION_DONE ||
+                event.getAction() == KeyEvent.ACTION_DOWN &&
+                        event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+
+            if (!event.isShiftPressed()) {
+                Log.v("AndroidEnterKeyActivity", "Enter Key Pressed!");
+                switch (view.getId()) {
+                    case R.id.tvRecherche :
+                    {
+                        String recherche = myEditText.getText().toString();
+
+                        if(listMusique.contains(recherche))
+                        {
+                            listRecherche.clear();
+                            listRecherche.add(recherche);
+                            adapter = new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1,listRecherche);
+                            lv.setAdapter(adapter);
+                        }
+                        else
+                        {
+                            adapter = new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1,listMusique);
+                            lv.setAdapter(adapter);
+                        }
+                        break;
+                    }
+                }
+                return true;
+            }
+
+        }
+        return false;
     }
 }

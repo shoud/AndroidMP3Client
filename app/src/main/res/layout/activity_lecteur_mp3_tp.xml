@@ -17,29 +17,16 @@
         android:layout_toEndOf="@+id/btInfo" />
 
     <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/lvMusique"
         android:layout_above="@+id/playStop"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/textView"
         android:background="#ffd6dadc"
-        android:enabled="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Recherche"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/lvMusique"
-        android:layout_alignEnd="@+id/lvMusique"
-        android:background="#ffe0fcff"
-        android:layout_gravity="right|left" />
+        android:enabled="true"
+        android:layout_gravity="center"
+        android:layout_below="@+id/tvRecherche" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -81,5 +68,16 @@
         android:layout_alignRight="@+id/lvMusique"
         android:layout_alignEnd="@+id/lvMusique"
         android:src="@android:drawable/ic_delete" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvRecherche"
+        android:layout_alignRight="@+id/lvMusique"
+        android:layout_alignEnd="@+id/lvMusique"
+        android:text="Recherche"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
 
 </RelativeLayout>
