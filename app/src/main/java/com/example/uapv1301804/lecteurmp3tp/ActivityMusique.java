@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import GestionMP3.FichierMP3;
 
-
+/**
+ * Activité permettant d'afficher toutes les informations d'un mp3
+ */
 public class ActivityMusique extends Activity {
 
     private FichierMP3 fichierMP3 = null;

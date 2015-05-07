@@ -8,7 +8,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Created by uapv1301804 on 03/03/15.
+ * Classe permettant de gérer les mp3
+ * Ajouter
+ * Supprimer
+ * Rechercher
+ * Lire
  */
 public class GestionMP3 implements MediaPlayer.OnPreparedListener {
 
@@ -55,16 +59,20 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
         mp.start();
     }
 
+    /**
+     * Permet de mettre en pause la musique
+     */
     public void pause()
     {
         mp.pause();
     }
+
+    /**
+     * Permet de lancer la musique
+     */
     public void play()
     {
         mp.start();
-    }
-    public Boolean isPlaying() {
-        return mp != null && mp.isPlaying();
     }
     /**
      * Permet de rajouter un MP3

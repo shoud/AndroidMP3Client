@@ -23,17 +23,37 @@ import java.util.ArrayList;
 
 import GestionMP3.GestionMP3;
 import GestionMP3.FichierMP3;
+import GestionMP3.EnvoyerMusique;
+import GestionMP3.MyProgressDialog;
 
-
+/**
+ * Activité principale de l'application, elle permet :
+ * De rechercher un mp3
+ * D'afficher la liste de mp3
+ * De lire un mp3
+ * De mettre sur pause
+ * De relancer un mp3
+ * D'afficher les informations du mp3 en cour
+ * D'ajouter un mp3
+ * De faire une comman,de vocale
+ */
 public class LecteurMP3TP extends Activity implements View.OnKeyListener {
 
+    //Objet permettant de gérer les mp3, lien avec le serveur distant
     private GestionMP3 gestionMP3 = null;
+    //La liste des musiques sur le serveur
     private ArrayList<String> listMusique = new ArrayList<String>();
+    //La liste des fichiers corespondant à une recherche
     private ArrayList<String> listRecherche = new ArrayList<String>();
+    //L'adaptateur
     private ArrayAdapter<String> adapter;
+    //Le context
     private Context context;
-    //private ListView lv = (ListView)findViewById(R.id.lvMusique);
 
+    /**
+     * Méthode permettant la création d'une activité
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +69,7 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
             if(!listMusique.contains(morceau))
                 listMusique.add(morceau);
         }
+        //On met à jour la liste de musique
         adapter = new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1,listMusique);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -65,30 +86,11 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
                 }
             }
         });
+        //EditText permettant de faire une recherche
         EditText editText1 = (EditText) findViewById(R.id.tvRecherche);
+        //Permet de détecter quand on appui sur une touche quand on fait une recherche
+        //pour rafraichir la recherche un live
         editText1.setOnKeyListener(this);
-        /*final TextView textView = (TextView) findViewById(R.id.tvRecherche);
-        textView.setOnFocusChangeListener(new View.OnFocusChangeListener()
-        {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                System.out.println("CCCCCCCCCCCCCCOOOOOOOOOOOOOOUUUUUUU");
-
-                if(hasFocus)
-                {
-                    String recherche = textView.getText().toString();
-                    System.out.println(">>>>>>>>>>>>>>>>> " + recherche);
-                    if(listMusique.contains(recherche))
-                    {
-                        listRecherche.clear();
-                        listRecherche.add(recherche);
-                        adapter = new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1,listRecherche);
-                        lv.setAdapter(adapter);
-                    }
-                }
-            }
-        });*/
-
     }
 
     @Override
@@ -129,9 +131,16 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
 
     }
 
+    /**
+     * Gestion du bouton permettant d'afficher les informations
+     * de la musique en cour de lecture
+     * @param controlView
+     */
     public void btInformation(View controlView)
     {
+        //Récupération du bouton
         final Button loginButton = (Button) findViewById(R.id.btInfo);
+        //Lancement d'une nouvelle activité permettant d'afficher les informations
         loginButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -143,19 +152,40 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
         });
     }
 
+    /**
+     * Gestion du bouton permettant de rajouter un musique
+     * Lance une fenetre permettant de sélectionner une musique
+     * @param controlView
+     */
     public void btAjouter(View controlView)
     {
-        final Button loginButton = (Button) findViewById(R.id.btAjouter);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LecteurMP3TP.this, ActivityAjouter.class);
-                startActivity(intent);
-            }
-        });
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        startActivityForResult(intent,0);
     }
 
+    /**
+     * Permet de récupérer le résultat de la fenetre permettant de rajouter une musique
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 0) {
+                String songPath = data.getData().getPath();
+                String titre = "JeTest";
+                EnvoyerMusique envoyerMusique = new EnvoyerMusique(songPath, titre, new MyProgressDialog(this), gestionMP3);
+                envoyerMusique.execute();
+            }
+        }
+    }
+
+    /**
+     * Permet de supprimer une musique
+     * @param controlView
+     */
     public void btSupprimer(View controlView)
     {
         final ImageButton imageButton = (ImageButton) findViewById(R.id.imageBtSupprimer);
@@ -176,27 +206,14 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
         }
     }
 
-    public void btRafraichir(View controleView)
-    {
-        //Récupération de la listeview de musique
-        ListView lv = (ListView)findViewById(R.id.lvMusique);
-        context = this;
-        //On récupère la liste de musique
-        for(String morceau : gestionMP3.lister())
-        {
-            if(!listMusique.contains(morceau))
-                listMusique.add(morceau);
-        }
-        adapter = new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1,listMusique);
-        lv.setAdapter(adapter);
-    }
-
-    public void tvRecherche(View controleView)
-    {
-        final TextView textView = (TextView) findViewById(R.id.tvRecherche);
-        System.out.println(textView.getText().toString());
-    }
-
+    /**
+     * Méthode permettant de detecter l'appui sur une touche
+     * Utilisé pour réfraichir un live la liste des solutions en fonction d'une recherche
+     * @param view
+     * @param keyCode
+     * @param event
+     * @return
+     */
     @Override
     public boolean onKey(View view, int keyCode, KeyEvent event) {
         //On récupère le editText qui a déclenché l'évenement

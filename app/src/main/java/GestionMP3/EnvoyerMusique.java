@@ -10,15 +10,32 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.Arrays;
 
+/**
+ * Classe permettant d'envoyer un fichier mp3 sur le serveur
+ */
 public class EnvoyerMusique extends AsyncTask<Void, Integer, Void>
 {
+    //Le chemin du MP3
     private String chemin = null;
+    //Le titre du MP3
     private String titre = null;
+    //La boite de dialogue pour montrer l'envoi du MP3
     private MyProgressDialog dialog = null;
+    //Récupération de l'objet permettant de lancer des requets sur le serveur
     private Serveur.mp3Prx mp3 = null;
+    //Initialisation de la taille à 0.
     private int size = 0;
+    //L'objet permettant de gérer les mp3
     private GestionMP3 gestionMP3 = null;
 
+    /**
+     * Constructeur de la classe EnvoyerMusique
+     * Elle est initialisé à chaque envoie de mp3
+     * @param chemin Le chemin du mp3 à envoyer
+     * @param titre Le titre du mp3 à envoyer
+     * @param dialog La boite de dialogue à utiliser lors de l'envoi
+     * @param gestionMP3 L'objet permettant de gérer les mp3
+     */
     public EnvoyerMusique(String chemin, String titre, MyProgressDialog dialog, GestionMP3 gestionMP3) {
         this.chemin = chemin;
         this.titre = titre;
@@ -28,6 +45,11 @@ public class EnvoyerMusique extends AsyncTask<Void, Integer, Void>
 
     }
 
+    /**
+     * Méthode permettant d'envoyer un fichier
+     * @param params
+     * @return rien
+     */
     @Override
     protected Void doInBackground(Void... params) {
         try {
@@ -50,6 +72,7 @@ public class EnvoyerMusique extends AsyncTask<Void, Integer, Void>
                 byte[] temp = Arrays.copyOfRange(bytes, offset, end);
                 try {
                     publishProgress(offset);
+                    System.out.println("AVANT envoi !!!!!!!!!!!!!!!!!!!");
                     mp3.envoyerMusique(titre, temp);
                 } catch (Exception e) {
                     Log.e("upload", e.toString());
@@ -64,6 +87,10 @@ public class EnvoyerMusique extends AsyncTask<Void, Integer, Void>
         return null;
     }
 
+    /**
+     * Méthode permettant de montrer l'avancement de l'envoi
+     * @param values
+     */
     @Override
     public void onProgressUpdate(Integer... values)
     {
@@ -75,6 +102,10 @@ public class EnvoyerMusique extends AsyncTask<Void, Integer, Void>
         dialog.setProgress(values[0]);
     }
 
+    /**
+     * Méthode permettant de fermer la boite de dialogue
+     * @param result
+     */
     @Override
     public void onPostExecute(Void result)
     {
