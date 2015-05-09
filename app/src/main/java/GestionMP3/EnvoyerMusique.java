@@ -42,7 +42,6 @@ public class EnvoyerMusique extends AsyncTask<Void, Integer, Void>
         this.dialog = dialog;
         this.gestionMP3 = gestionMP3;
         this.mp3 = gestionMP3.getMp3();
-
     }
 
     /**
@@ -71,8 +70,7 @@ public class EnvoyerMusique extends AsyncTask<Void, Integer, Void>
                     end = size;
                 byte[] temp = Arrays.copyOfRange(bytes, offset, end);
                 try {
-                    publishProgress(offset);
-                    System.out.println("AVANT envoi !!!!!!!!!!!!!!!!!!!");
+                    publishProgress(offset);;
                     mp3.envoyerMusique(titre, temp);
                 } catch (Exception e) {
                     Log.e("upload", e.toString());
@@ -95,8 +93,9 @@ public class EnvoyerMusique extends AsyncTask<Void, Integer, Void>
     public void onProgressUpdate(Integer... values)
     {
         if (values[0] == 0) {
-            dialog.setMessage("Uploading " + titre );
+            dialog.setMessage("Envoi de " + titre );
             dialog.setMax(size);
+            dialog.setCancelable(false);
             dialog.show();
         }
         dialog.setProgress(values[0]);

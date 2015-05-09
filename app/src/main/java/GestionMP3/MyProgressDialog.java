@@ -24,5 +24,6 @@ public class MyProgressDialog extends ProgressDialog{
     public void set(int size,String titre) {
         setMessage("Envoi " + titre);
         setMax(size / 1024);
+        setCancelable(false);
     }
 }

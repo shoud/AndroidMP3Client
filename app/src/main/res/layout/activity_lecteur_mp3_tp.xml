@@ -69,16 +69,16 @@
         android:layout_alignEnd="@+id/lvMusique"
         android:src="@android:drawable/ic_delete" />
 
-    <EditText
+    <AutoCompleteTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvRecherche"
-        android:layout_alignRight="@+id/lvMusique"
-        android:layout_alignEnd="@+id/lvMusique"
         android:text="Recherche"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/btRafraichir"
+        android:layout_toStartOf="@+id/btRafraichir" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -91,5 +91,17 @@
         android:layout_toRightOf="@+id/btAjouter"
         android:layout_toEndOf="@+id/btAjouter"
         android:layout_alignTop="@+id/imageBtSupprimer" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btRafraichir"
+        android:onClick="btrafraichir"
+        android:layout_alignBottom="@+id/editText"
+        android:layout_toRightOf="@+id/micro"
+        android:layout_alignTop="@+id/tvRecherche"
+        android:layout_alignRight="@+id/lvMusique"
+        android:layout_alignEnd="@+id/lvMusique"
+        android:src="@android:drawable/ic_menu_rotate" />
 
 </RelativeLayout>
