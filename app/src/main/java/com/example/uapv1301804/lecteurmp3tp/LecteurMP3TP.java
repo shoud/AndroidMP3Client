@@ -73,7 +73,7 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
        setContentView(R.layout.activity_lecteur_mp3_tp);
 
         init();
-        Button ajouter = (Button) findViewById(R.id.btAjouter);
+        ImageButton ajouter = (ImageButton) findViewById(R.id.btAjouter);
         // add button listener
         ajouter.setOnClickListener(new View.OnClickListener()
         {

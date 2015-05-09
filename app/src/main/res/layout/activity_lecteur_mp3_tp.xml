@@ -48,15 +48,15 @@
         android:layout_alignParentStart="true"
         android:background="#fffaffbe" />
 
-    <Button
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ajouter"
         android:id="@+id/btAjouter"
         android:onClick="btAjouter"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/playStop"
-        android:background="#ffeeffb7" />
+        android:src="@android:drawable/ic_input_add" />
+
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -80,17 +80,16 @@
         android:layout_toLeftOf="@+id/btRafraichir"
         android:layout_toStartOf="@+id/btRafraichir" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mic"
         android:id="@+id/micro"
         android:layout_alignBottom="@+id/playStop"
         android:layout_toLeftOf="@+id/imageBtSupprimer"
         android:layout_toRightOf="@+id/btAjouter"
         android:layout_toEndOf="@+id/btAjouter"
-        android:layout_alignTop="@+id/imageBtSupprimer" />
+        android:layout_alignTop="@+id/imageBtSupprimer"
+        android:src="@android:drawable/ic_btn_speak_now" />
 
     <ImageButton
         android:layout_width="wrap_content"
