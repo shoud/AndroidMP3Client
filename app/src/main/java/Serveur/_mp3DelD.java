@@ -22,11 +22,11 @@ package Serveur;
 
 public final class _mp3DelD extends Ice._ObjectDelD implements _mp3Del
 {
-    public void ajouterMP3(final String nom, final String url, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
+    public void envoyerMusique(final String titre, final String artiste, final String album, final String compo, final byte[] musique, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
         throws IceInternal.LocalExceptionWrapper
     {
         final Ice.Current __current = new Ice.Current();
-        __initCurrent(__current, "ajouterMP3", Ice.OperationMode.Normal, __ctx);
+        __initCurrent(__current, "envoyerMusique", Ice.OperationMode.Normal, __ctx);
         IceInternal.Direct __direct = null;
         try
         {
@@ -43,7 +43,7 @@ public final class _mp3DelD extends Ice._ObjectDelD implements _mp3Del
                     {
                         throw new Ice.OperationNotExistException(__current.id, __current.facet, __current.operation);
                     }
-                    __servant.ajouterMP3(nom, url, __current);
+                    __servant.envoyerMusique(titre, artiste, album, compo, musique, __current);
                     return Ice.DispatchStatus.DispatchOK;
                 }
             };
@@ -71,11 +71,12 @@ public final class _mp3DelD extends Ice._ObjectDelD implements _mp3Del
         }
     }
 
-    public void envoyerMusique(final String nom, final byte[] musique, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
+    public String getAlbum(final String nom, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
         throws IceInternal.LocalExceptionWrapper
     {
         final Ice.Current __current = new Ice.Current();
-        __initCurrent(__current, "envoyerMusique", Ice.OperationMode.Normal, __ctx);
+        __initCurrent(__current, "getAlbum", Ice.OperationMode.Normal, __ctx);
+        final Ice.StringHolder __result = new Ice.StringHolder();
         IceInternal.Direct __direct = null;
         try
         {
@@ -92,7 +93,7 @@ public final class _mp3DelD extends Ice._ObjectDelD implements _mp3Del
                     {
                         throw new Ice.OperationNotExistException(__current.id, __current.facet, __current.operation);
                     }
-                    __servant.envoyerMusique(nom, musique, __current);
+                    __result.value = __servant.getAlbum(nom, __current);
                     return Ice.DispatchStatus.DispatchOK;
                 }
             };
@@ -104,6 +105,7 @@ public final class _mp3DelD extends Ice._ObjectDelD implements _mp3Del
                     __direct.throwUserException();
                 }
                 assert __status == Ice.DispatchStatus.DispatchOK;
+                return __result.value;
             }
             finally
             {
@@ -118,6 +120,111 @@ public final class _mp3DelD extends Ice._ObjectDelD implements _mp3Del
         {
             IceInternal.LocalExceptionWrapper.throwWrapper(__ex);
         }
+        return __result.value;
+    }
+
+    public String getArtiste(final String titre, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
+        throws IceInternal.LocalExceptionWrapper
+    {
+        final Ice.Current __current = new Ice.Current();
+        __initCurrent(__current, "getArtiste", Ice.OperationMode.Normal, __ctx);
+        final Ice.StringHolder __result = new Ice.StringHolder();
+        IceInternal.Direct __direct = null;
+        try
+        {
+            __direct = new IceInternal.Direct(__current)
+            {
+                public Ice.DispatchStatus run(Ice.Object __obj)
+                {
+                    mp3 __servant = null;
+                    if(__obj == null || __obj instanceof mp3)
+                    {
+                        __servant = (mp3)__obj;
+                    }
+                    else
+                    {
+                        throw new Ice.OperationNotExistException(__current.id, __current.facet, __current.operation);
+                    }
+                    __result.value = __servant.getArtiste(titre, __current);
+                    return Ice.DispatchStatus.DispatchOK;
+                }
+            };
+            try
+            {
+                Ice.DispatchStatus __status = __direct.getServant().__collocDispatch(__direct);
+                if(__status == Ice.DispatchStatus.DispatchUserException)
+                {
+                    __direct.throwUserException();
+                }
+                assert __status == Ice.DispatchStatus.DispatchOK;
+                return __result.value;
+            }
+            finally
+            {
+                __direct.destroy();
+            }
+        }
+        catch(Ice.SystemException __ex)
+        {
+            throw __ex;
+        }
+        catch(java.lang.Throwable __ex)
+        {
+            IceInternal.LocalExceptionWrapper.throwWrapper(__ex);
+        }
+        return __result.value;
+    }
+
+    public String getCompo(final String nom, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
+        throws IceInternal.LocalExceptionWrapper
+    {
+        final Ice.Current __current = new Ice.Current();
+        __initCurrent(__current, "getCompo", Ice.OperationMode.Normal, __ctx);
+        final Ice.StringHolder __result = new Ice.StringHolder();
+        IceInternal.Direct __direct = null;
+        try
+        {
+            __direct = new IceInternal.Direct(__current)
+            {
+                public Ice.DispatchStatus run(Ice.Object __obj)
+                {
+                    mp3 __servant = null;
+                    if(__obj == null || __obj instanceof mp3)
+                    {
+                        __servant = (mp3)__obj;
+                    }
+                    else
+                    {
+                        throw new Ice.OperationNotExistException(__current.id, __current.facet, __current.operation);
+                    }
+                    __result.value = __servant.getCompo(nom, __current);
+                    return Ice.DispatchStatus.DispatchOK;
+                }
+            };
+            try
+            {
+                Ice.DispatchStatus __status = __direct.getServant().__collocDispatch(__direct);
+                if(__status == Ice.DispatchStatus.DispatchUserException)
+                {
+                    __direct.throwUserException();
+                }
+                assert __status == Ice.DispatchStatus.DispatchOK;
+                return __result.value;
+            }
+            finally
+            {
+                __direct.destroy();
+            }
+        }
+        catch(Ice.SystemException __ex)
+        {
+            throw __ex;
+        }
+        catch(java.lang.Throwable __ex)
+        {
+            IceInternal.LocalExceptionWrapper.throwWrapper(__ex);
+        }
+        return __result.value;
     }
 
     public String getToken(java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
@@ -172,7 +279,7 @@ public final class _mp3DelD extends Ice._ObjectDelD implements _mp3Del
         return __result.value;
     }
 
-    public String jouerMP3(final String nom, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
+    public String jouerMP3(final String titre, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
         throws IceInternal.LocalExceptionWrapper
     {
         final Ice.Current __current = new Ice.Current();
@@ -194,7 +301,7 @@ public final class _mp3DelD extends Ice._ObjectDelD implements _mp3Del
                     {
                         throw new Ice.OperationNotExistException(__current.id, __current.facet, __current.operation);
                     }
-                    __result.value = __servant.jouerMP3(nom, __current);
+                    __result.value = __servant.jouerMP3(titre, __current);
                     return Ice.DispatchStatus.DispatchOK;
                 }
             };
@@ -325,7 +432,7 @@ public final class _mp3DelD extends Ice._ObjectDelD implements _mp3Del
         }
     }
 
-    public boolean rechercherMP3(final String nom, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
+    public boolean rechercherMP3(final String titre, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
         throws IceInternal.LocalExceptionWrapper
     {
         final Ice.Current __current = new Ice.Current();
@@ -347,7 +454,7 @@ public final class _mp3DelD extends Ice._ObjectDelD implements _mp3Del
                     {
                         throw new Ice.OperationNotExistException(__current.id, __current.facet, __current.operation);
                     }
-                    __result.value = __servant.rechercherMP3(nom, __current);
+                    __result.value = __servant.rechercherMP3(titre, __current);
                     return Ice.DispatchStatus.DispatchOK;
                 }
             };
@@ -426,7 +533,7 @@ public final class _mp3DelD extends Ice._ObjectDelD implements _mp3Del
         }
     }
 
-    public boolean supprimerMP3(final String nom, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
+    public boolean supprimerMP3(final String titre, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
         throws IceInternal.LocalExceptionWrapper
     {
         final Ice.Current __current = new Ice.Current();
@@ -448,7 +555,7 @@ public final class _mp3DelD extends Ice._ObjectDelD implements _mp3Del
                     {
                         throw new Ice.OperationNotExistException(__current.id, __current.facet, __current.operation);
                     }
-                    __result.value = __servant.supprimerMP3(nom, __current);
+                    __result.value = __servant.supprimerMP3(titre, __current);
                     return Ice.DispatchStatus.DispatchOK;
                 }
             };

@@ -70,14 +70,24 @@ public abstract class _mp3Disp extends Ice.ObjectImpl implements mp3
         return __ids[1];
     }
 
-    public final void ajouterMP3(String nom, String url)
+    public final void envoyerMusique(String titre, String artiste, String album, String compo, byte[] musique)
     {
-        ajouterMP3(nom, url, null);
+        envoyerMusique(titre, artiste, album, compo, musique, null);
     }
 
-    public final void envoyerMusique(String nom, byte[] musique)
+    public final String getAlbum(String nom)
     {
-        envoyerMusique(nom, musique, null);
+        return getAlbum(nom, null);
+    }
+
+    public final String getArtiste(String titre)
+    {
+        return getArtiste(titre, null);
+    }
+
+    public final String getCompo(String nom)
+    {
+        return getCompo(nom, null);
     }
 
     public final String getToken()
@@ -85,9 +95,9 @@ public abstract class _mp3Disp extends Ice.ObjectImpl implements mp3
         return getToken(null);
     }
 
-    public final String jouerMP3(String nom)
+    public final String jouerMP3(String titre)
     {
-        return jouerMP3(nom, null);
+        return jouerMP3(titre, null);
     }
 
     public final String[] listerMP3()
@@ -100,9 +110,9 @@ public abstract class _mp3Disp extends Ice.ObjectImpl implements mp3
         play(null);
     }
 
-    public final boolean rechercherMP3(String nom)
+    public final boolean rechercherMP3(String titre)
     {
-        return rechercherMP3(nom, null);
+        return rechercherMP3(titre, null);
     }
 
     public final void stop()
@@ -110,33 +120,19 @@ public abstract class _mp3Disp extends Ice.ObjectImpl implements mp3
         stop(null);
     }
 
-    public final boolean supprimerMP3(String nom)
+    public final boolean supprimerMP3(String titre)
     {
-        return supprimerMP3(nom, null);
-    }
-
-    public static Ice.DispatchStatus ___ajouterMP3(mp3 __obj, IceInternal.Incoming __inS, Ice.Current __current)
-    {
-        __checkMode(Ice.OperationMode.Normal, __current.mode);
-        IceInternal.BasicStream __is = __inS.startReadParams();
-        String nom;
-        String url;
-        nom = __is.readString();
-        url = __is.readString();
-        __inS.endReadParams();
-        __obj.ajouterMP3(nom, url, __current);
-        __inS.__writeEmptyParams();
-        return Ice.DispatchStatus.DispatchOK;
+        return supprimerMP3(titre, null);
     }
 
     public static Ice.DispatchStatus ___supprimerMP3(mp3 __obj, IceInternal.Incoming __inS, Ice.Current __current)
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.startReadParams();
-        String nom;
-        nom = __is.readString();
+        String titre;
+        titre = __is.readString();
         __inS.endReadParams();
-        boolean __ret = __obj.supprimerMP3(nom, __current);
+        boolean __ret = __obj.supprimerMP3(titre, __current);
         IceInternal.BasicStream __os = __inS.__startWriteParams(Ice.FormatType.DefaultFormat);
         __os.writeBool(__ret);
         __inS.__endWriteParams(true);
@@ -147,10 +143,10 @@ public abstract class _mp3Disp extends Ice.ObjectImpl implements mp3
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.startReadParams();
-        String nom;
-        nom = __is.readString();
+        String titre;
+        titre = __is.readString();
         __inS.endReadParams();
-        boolean __ret = __obj.rechercherMP3(nom, __current);
+        boolean __ret = __obj.rechercherMP3(titre, __current);
         IceInternal.BasicStream __os = __inS.__startWriteParams(Ice.FormatType.DefaultFormat);
         __os.writeBool(__ret);
         __inS.__endWriteParams(true);
@@ -161,10 +157,10 @@ public abstract class _mp3Disp extends Ice.ObjectImpl implements mp3
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.startReadParams();
-        String nom;
-        nom = __is.readString();
+        String titre;
+        titre = __is.readString();
         __inS.endReadParams();
-        String __ret = __obj.jouerMP3(nom, __current);
+        String __ret = __obj.jouerMP3(titre, __current);
         IceInternal.BasicStream __os = __inS.__startWriteParams(Ice.FormatType.DefaultFormat);
         __os.writeString(__ret);
         __inS.__endWriteParams(true);
@@ -176,6 +172,48 @@ public abstract class _mp3Disp extends Ice.ObjectImpl implements mp3
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         __inS.readEmptyParams();
         String __ret = __obj.getToken(__current);
+        IceInternal.BasicStream __os = __inS.__startWriteParams(Ice.FormatType.DefaultFormat);
+        __os.writeString(__ret);
+        __inS.__endWriteParams(true);
+        return Ice.DispatchStatus.DispatchOK;
+    }
+
+    public static Ice.DispatchStatus ___getArtiste(mp3 __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    {
+        __checkMode(Ice.OperationMode.Normal, __current.mode);
+        IceInternal.BasicStream __is = __inS.startReadParams();
+        String titre;
+        titre = __is.readString();
+        __inS.endReadParams();
+        String __ret = __obj.getArtiste(titre, __current);
+        IceInternal.BasicStream __os = __inS.__startWriteParams(Ice.FormatType.DefaultFormat);
+        __os.writeString(__ret);
+        __inS.__endWriteParams(true);
+        return Ice.DispatchStatus.DispatchOK;
+    }
+
+    public static Ice.DispatchStatus ___getAlbum(mp3 __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    {
+        __checkMode(Ice.OperationMode.Normal, __current.mode);
+        IceInternal.BasicStream __is = __inS.startReadParams();
+        String nom;
+        nom = __is.readString();
+        __inS.endReadParams();
+        String __ret = __obj.getAlbum(nom, __current);
+        IceInternal.BasicStream __os = __inS.__startWriteParams(Ice.FormatType.DefaultFormat);
+        __os.writeString(__ret);
+        __inS.__endWriteParams(true);
+        return Ice.DispatchStatus.DispatchOK;
+    }
+
+    public static Ice.DispatchStatus ___getCompo(mp3 __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    {
+        __checkMode(Ice.OperationMode.Normal, __current.mode);
+        IceInternal.BasicStream __is = __inS.startReadParams();
+        String nom;
+        nom = __is.readString();
+        __inS.endReadParams();
+        String __ret = __obj.getCompo(nom, __current);
         IceInternal.BasicStream __os = __inS.__startWriteParams(Ice.FormatType.DefaultFormat);
         __os.writeString(__ret);
         __inS.__endWriteParams(true);
@@ -204,12 +242,18 @@ public abstract class _mp3Disp extends Ice.ObjectImpl implements mp3
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.startReadParams();
-        String nom;
+        String titre;
+        String artiste;
+        String album;
+        String compo;
         byte[] musique;
-        nom = __is.readString();
+        titre = __is.readString();
+        artiste = __is.readString();
+        album = __is.readString();
+        compo = __is.readString();
         musique = MusiqueByteHelper.read(__is);
         __inS.endReadParams();
-        __obj.envoyerMusique(nom, musique, __current);
+        __obj.envoyerMusique(titre, artiste, album, compo, musique, __current);
         __inS.__writeEmptyParams();
         return Ice.DispatchStatus.DispatchOK;
     }
@@ -227,8 +271,10 @@ public abstract class _mp3Disp extends Ice.ObjectImpl implements mp3
 
     private final static String[] __all =
     {
-        "ajouterMP3",
         "envoyerMusique",
+        "getAlbum",
+        "getArtiste",
+        "getCompo",
         "getToken",
         "ice_id",
         "ice_ids",
@@ -254,53 +300,61 @@ public abstract class _mp3Disp extends Ice.ObjectImpl implements mp3
         {
             case 0:
             {
-                return ___ajouterMP3(this, in, __current);
+                return ___envoyerMusique(this, in, __current);
             }
             case 1:
             {
-                return ___envoyerMusique(this, in, __current);
+                return ___getAlbum(this, in, __current);
             }
             case 2:
             {
-                return ___getToken(this, in, __current);
+                return ___getArtiste(this, in, __current);
             }
             case 3:
             {
-                return ___ice_id(this, in, __current);
+                return ___getCompo(this, in, __current);
             }
             case 4:
             {
-                return ___ice_ids(this, in, __current);
+                return ___getToken(this, in, __current);
             }
             case 5:
             {
-                return ___ice_isA(this, in, __current);
+                return ___ice_id(this, in, __current);
             }
             case 6:
             {
-                return ___ice_ping(this, in, __current);
+                return ___ice_ids(this, in, __current);
             }
             case 7:
             {
-                return ___jouerMP3(this, in, __current);
+                return ___ice_isA(this, in, __current);
             }
             case 8:
             {
-                return ___listerMP3(this, in, __current);
+                return ___ice_ping(this, in, __current);
             }
             case 9:
             {
-                return ___play(this, in, __current);
+                return ___jouerMP3(this, in, __current);
             }
             case 10:
             {
-                return ___rechercherMP3(this, in, __current);
+                return ___listerMP3(this, in, __current);
             }
             case 11:
             {
-                return ___stop(this, in, __current);
+                return ___play(this, in, __current);
             }
             case 12:
+            {
+                return ___rechercherMP3(this, in, __current);
+            }
+            case 13:
+            {
+                return ___stop(this, in, __current);
+            }
+            case 14:
             {
                 return ___supprimerMP3(this, in, __current);
             }

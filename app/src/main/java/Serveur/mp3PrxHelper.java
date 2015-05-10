@@ -22,124 +22,19 @@ package Serveur;
 
 public final class mp3PrxHelper extends Ice.ObjectPrxHelperBase implements mp3Prx
 {
-    private static final String __ajouterMP3_name = "ajouterMP3";
-
-    public void ajouterMP3(String nom, String url)
-    {
-        ajouterMP3(nom, url, null, false);
-    }
-
-    public void ajouterMP3(String nom, String url, java.util.Map<String, String> __ctx)
-    {
-        ajouterMP3(nom, url, __ctx, true);
-    }
-
-    private void ajouterMP3(String nom, String url, java.util.Map<String, String> __ctx, boolean __explicitCtx)
-    {
-        if(__explicitCtx && __ctx == null)
-        {
-            __ctx = _emptyContext;
-        }
-        final Ice.Instrumentation.InvocationObserver __observer = IceInternal.ObserverHelper.get(this, "ajouterMP3", __ctx);
-        int __cnt = 0;
-        try
-        {
-            while(true)
-            {
-                Ice._ObjectDel __delBase = null;
-                try
-                {
-                    __delBase = __getDelegate(false);
-                    _mp3Del __del = (_mp3Del)__delBase;
-                    __del.ajouterMP3(nom, url, __ctx, __observer);
-                    return;
-                }
-                catch(IceInternal.LocalExceptionWrapper __ex)
-                {
-                    __handleExceptionWrapper(__delBase, __ex, __observer);
-                }
-                catch(Ice.LocalException __ex)
-                {
-                    __cnt = __handleException(__delBase, __ex, null, __cnt, __observer);
-                }
-            }
-        }
-        finally
-        {
-            if(__observer != null)
-            {
-                __observer.detach();
-            }
-        }
-    }
-
-    public Ice.AsyncResult begin_ajouterMP3(String nom, String url)
-    {
-        return begin_ajouterMP3(nom, url, null, false, null);
-    }
-
-    public Ice.AsyncResult begin_ajouterMP3(String nom, String url, java.util.Map<String, String> __ctx)
-    {
-        return begin_ajouterMP3(nom, url, __ctx, true, null);
-    }
-
-    public Ice.AsyncResult begin_ajouterMP3(String nom, String url, Ice.Callback __cb)
-    {
-        return begin_ajouterMP3(nom, url, null, false, __cb);
-    }
-
-    public Ice.AsyncResult begin_ajouterMP3(String nom, String url, java.util.Map<String, String> __ctx, Ice.Callback __cb)
-    {
-        return begin_ajouterMP3(nom, url, __ctx, true, __cb);
-    }
-
-    public Ice.AsyncResult begin_ajouterMP3(String nom, String url, Callback_mp3_ajouterMP3 __cb)
-    {
-        return begin_ajouterMP3(nom, url, null, false, __cb);
-    }
-
-    public Ice.AsyncResult begin_ajouterMP3(String nom, String url, java.util.Map<String, String> __ctx, Callback_mp3_ajouterMP3 __cb)
-    {
-        return begin_ajouterMP3(nom, url, __ctx, true, __cb);
-    }
-
-    private Ice.AsyncResult begin_ajouterMP3(String nom, String url, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
-    {
-        IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __ajouterMP3_name, __cb);
-        try
-        {
-            __result.__prepare(__ajouterMP3_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
-            IceInternal.BasicStream __os = __result.__startWriteParams(Ice.FormatType.DefaultFormat);
-            __os.writeString(nom);
-            __os.writeString(url);
-            __result.__endWriteParams();
-            __result.__send(true);
-        }
-        catch(Ice.LocalException __ex)
-        {
-            __result.__exceptionAsync(__ex);
-        }
-        return __result;
-    }
-
-    public void end_ajouterMP3(Ice.AsyncResult __result)
-    {
-        __end(__result, __ajouterMP3_name);
-    }
-
     private static final String __envoyerMusique_name = "envoyerMusique";
 
-    public void envoyerMusique(String nom, byte[] musique)
+    public void envoyerMusique(String titre, String artiste, String album, String compo, byte[] musique)
     {
-        envoyerMusique(nom, musique, null, false);
+        envoyerMusique(titre, artiste, album, compo, musique, null, false);
     }
 
-    public void envoyerMusique(String nom, byte[] musique, java.util.Map<String, String> __ctx)
+    public void envoyerMusique(String titre, String artiste, String album, String compo, byte[] musique, java.util.Map<String, String> __ctx)
     {
-        envoyerMusique(nom, musique, __ctx, true);
+        envoyerMusique(titre, artiste, album, compo, musique, __ctx, true);
     }
 
-    private void envoyerMusique(String nom, byte[] musique, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+    private void envoyerMusique(String titre, String artiste, String album, String compo, byte[] musique, java.util.Map<String, String> __ctx, boolean __explicitCtx)
     {
         if(__explicitCtx && __ctx == null)
         {
@@ -156,7 +51,7 @@ public final class mp3PrxHelper extends Ice.ObjectPrxHelperBase implements mp3Pr
                 {
                     __delBase = __getDelegate(false);
                     _mp3Del __del = (_mp3Del)__delBase;
-                    __del.envoyerMusique(nom, musique, __ctx, __observer);
+                    __del.envoyerMusique(titre, artiste, album, compo, musique, __ctx, __observer);
                     return;
                 }
                 catch(IceInternal.LocalExceptionWrapper __ex)
@@ -178,44 +73,47 @@ public final class mp3PrxHelper extends Ice.ObjectPrxHelperBase implements mp3Pr
         }
     }
 
-    public Ice.AsyncResult begin_envoyerMusique(String nom, byte[] musique)
+    public Ice.AsyncResult begin_envoyerMusique(String titre, String artiste, String album, String compo, byte[] musique)
     {
-        return begin_envoyerMusique(nom, musique, null, false, null);
+        return begin_envoyerMusique(titre, artiste, album, compo, musique, null, false, null);
     }
 
-    public Ice.AsyncResult begin_envoyerMusique(String nom, byte[] musique, java.util.Map<String, String> __ctx)
+    public Ice.AsyncResult begin_envoyerMusique(String titre, String artiste, String album, String compo, byte[] musique, java.util.Map<String, String> __ctx)
     {
-        return begin_envoyerMusique(nom, musique, __ctx, true, null);
+        return begin_envoyerMusique(titre, artiste, album, compo, musique, __ctx, true, null);
     }
 
-    public Ice.AsyncResult begin_envoyerMusique(String nom, byte[] musique, Ice.Callback __cb)
+    public Ice.AsyncResult begin_envoyerMusique(String titre, String artiste, String album, String compo, byte[] musique, Ice.Callback __cb)
     {
-        return begin_envoyerMusique(nom, musique, null, false, __cb);
+        return begin_envoyerMusique(titre, artiste, album, compo, musique, null, false, __cb);
     }
 
-    public Ice.AsyncResult begin_envoyerMusique(String nom, byte[] musique, java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    public Ice.AsyncResult begin_envoyerMusique(String titre, String artiste, String album, String compo, byte[] musique, java.util.Map<String, String> __ctx, Ice.Callback __cb)
     {
-        return begin_envoyerMusique(nom, musique, __ctx, true, __cb);
+        return begin_envoyerMusique(titre, artiste, album, compo, musique, __ctx, true, __cb);
     }
 
-    public Ice.AsyncResult begin_envoyerMusique(String nom, byte[] musique, Callback_mp3_envoyerMusique __cb)
+    public Ice.AsyncResult begin_envoyerMusique(String titre, String artiste, String album, String compo, byte[] musique, Callback_mp3_envoyerMusique __cb)
     {
-        return begin_envoyerMusique(nom, musique, null, false, __cb);
+        return begin_envoyerMusique(titre, artiste, album, compo, musique, null, false, __cb);
     }
 
-    public Ice.AsyncResult begin_envoyerMusique(String nom, byte[] musique, java.util.Map<String, String> __ctx, Callback_mp3_envoyerMusique __cb)
+    public Ice.AsyncResult begin_envoyerMusique(String titre, String artiste, String album, String compo, byte[] musique, java.util.Map<String, String> __ctx, Callback_mp3_envoyerMusique __cb)
     {
-        return begin_envoyerMusique(nom, musique, __ctx, true, __cb);
+        return begin_envoyerMusique(titre, artiste, album, compo, musique, __ctx, true, __cb);
     }
 
-    private Ice.AsyncResult begin_envoyerMusique(String nom, byte[] musique, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
+    private Ice.AsyncResult begin_envoyerMusique(String titre, String artiste, String album, String compo, byte[] musique, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
     {
         IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __envoyerMusique_name, __cb);
         try
         {
             __result.__prepare(__envoyerMusique_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
             IceInternal.BasicStream __os = __result.__startWriteParams(Ice.FormatType.DefaultFormat);
-            __os.writeString(nom);
+            __os.writeString(titre);
+            __os.writeString(artiste);
+            __os.writeString(album);
+            __os.writeString(compo);
             MusiqueByteHelper.write(__os, musique);
             __result.__endWriteParams();
             __result.__send(true);
@@ -230,6 +128,408 @@ public final class mp3PrxHelper extends Ice.ObjectPrxHelperBase implements mp3Pr
     public void end_envoyerMusique(Ice.AsyncResult __result)
     {
         __end(__result, __envoyerMusique_name);
+    }
+
+    private static final String __getAlbum_name = "getAlbum";
+
+    public String getAlbum(String nom)
+    {
+        return getAlbum(nom, null, false);
+    }
+
+    public String getAlbum(String nom, java.util.Map<String, String> __ctx)
+    {
+        return getAlbum(nom, __ctx, true);
+    }
+
+    private String getAlbum(String nom, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+    {
+        if(__explicitCtx && __ctx == null)
+        {
+            __ctx = _emptyContext;
+        }
+        final Ice.Instrumentation.InvocationObserver __observer = IceInternal.ObserverHelper.get(this, "getAlbum", __ctx);
+        int __cnt = 0;
+        try
+        {
+            while(true)
+            {
+                Ice._ObjectDel __delBase = null;
+                try
+                {
+                    __checkTwowayOnly("getAlbum");
+                    __delBase = __getDelegate(false);
+                    _mp3Del __del = (_mp3Del)__delBase;
+                    return __del.getAlbum(nom, __ctx, __observer);
+                }
+                catch(IceInternal.LocalExceptionWrapper __ex)
+                {
+                    __handleExceptionWrapper(__delBase, __ex, __observer);
+                }
+                catch(Ice.LocalException __ex)
+                {
+                    __cnt = __handleException(__delBase, __ex, null, __cnt, __observer);
+                }
+            }
+        }
+        finally
+        {
+            if(__observer != null)
+            {
+                __observer.detach();
+            }
+        }
+    }
+
+    public Ice.AsyncResult begin_getAlbum(String nom)
+    {
+        return begin_getAlbum(nom, null, false, null);
+    }
+
+    public Ice.AsyncResult begin_getAlbum(String nom, java.util.Map<String, String> __ctx)
+    {
+        return begin_getAlbum(nom, __ctx, true, null);
+    }
+
+    public Ice.AsyncResult begin_getAlbum(String nom, Ice.Callback __cb)
+    {
+        return begin_getAlbum(nom, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_getAlbum(String nom, java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    {
+        return begin_getAlbum(nom, __ctx, true, __cb);
+    }
+
+    public Ice.AsyncResult begin_getAlbum(String nom, Callback_mp3_getAlbum __cb)
+    {
+        return begin_getAlbum(nom, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_getAlbum(String nom, java.util.Map<String, String> __ctx, Callback_mp3_getAlbum __cb)
+    {
+        return begin_getAlbum(nom, __ctx, true, __cb);
+    }
+
+    private Ice.AsyncResult begin_getAlbum(String nom, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
+    {
+        __checkAsyncTwowayOnly(__getAlbum_name);
+        IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __getAlbum_name, __cb);
+        try
+        {
+            __result.__prepare(__getAlbum_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
+            IceInternal.BasicStream __os = __result.__startWriteParams(Ice.FormatType.DefaultFormat);
+            __os.writeString(nom);
+            __result.__endWriteParams();
+            __result.__send(true);
+        }
+        catch(Ice.LocalException __ex)
+        {
+            __result.__exceptionAsync(__ex);
+        }
+        return __result;
+    }
+
+    public String end_getAlbum(Ice.AsyncResult __result)
+    {
+        Ice.AsyncResult.__check(__result, this, __getAlbum_name);
+        boolean __ok = __result.__wait();
+        try
+        {
+            if(!__ok)
+            {
+                try
+                {
+                    __result.__throwUserException();
+                }
+                catch(Ice.UserException __ex)
+                {
+                    throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
+                }
+            }
+            IceInternal.BasicStream __is = __result.__startReadParams();
+            String __ret;
+            __ret = __is.readString();
+            __result.__endReadParams();
+            return __ret;
+        }
+        catch(Ice.LocalException ex)
+        {
+            Ice.Instrumentation.InvocationObserver __obsv = __result.__getObserver();
+            if(__obsv != null)
+            {
+                __obsv.failed(ex.ice_name());
+            }
+            throw ex;
+        }
+    }
+
+    private static final String __getArtiste_name = "getArtiste";
+
+    public String getArtiste(String titre)
+    {
+        return getArtiste(titre, null, false);
+    }
+
+    public String getArtiste(String titre, java.util.Map<String, String> __ctx)
+    {
+        return getArtiste(titre, __ctx, true);
+    }
+
+    private String getArtiste(String titre, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+    {
+        if(__explicitCtx && __ctx == null)
+        {
+            __ctx = _emptyContext;
+        }
+        final Ice.Instrumentation.InvocationObserver __observer = IceInternal.ObserverHelper.get(this, "getArtiste", __ctx);
+        int __cnt = 0;
+        try
+        {
+            while(true)
+            {
+                Ice._ObjectDel __delBase = null;
+                try
+                {
+                    __checkTwowayOnly("getArtiste");
+                    __delBase = __getDelegate(false);
+                    _mp3Del __del = (_mp3Del)__delBase;
+                    return __del.getArtiste(titre, __ctx, __observer);
+                }
+                catch(IceInternal.LocalExceptionWrapper __ex)
+                {
+                    __handleExceptionWrapper(__delBase, __ex, __observer);
+                }
+                catch(Ice.LocalException __ex)
+                {
+                    __cnt = __handleException(__delBase, __ex, null, __cnt, __observer);
+                }
+            }
+        }
+        finally
+        {
+            if(__observer != null)
+            {
+                __observer.detach();
+            }
+        }
+    }
+
+    public Ice.AsyncResult begin_getArtiste(String titre)
+    {
+        return begin_getArtiste(titre, null, false, null);
+    }
+
+    public Ice.AsyncResult begin_getArtiste(String titre, java.util.Map<String, String> __ctx)
+    {
+        return begin_getArtiste(titre, __ctx, true, null);
+    }
+
+    public Ice.AsyncResult begin_getArtiste(String titre, Ice.Callback __cb)
+    {
+        return begin_getArtiste(titre, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_getArtiste(String titre, java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    {
+        return begin_getArtiste(titre, __ctx, true, __cb);
+    }
+
+    public Ice.AsyncResult begin_getArtiste(String titre, Callback_mp3_getArtiste __cb)
+    {
+        return begin_getArtiste(titre, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_getArtiste(String titre, java.util.Map<String, String> __ctx, Callback_mp3_getArtiste __cb)
+    {
+        return begin_getArtiste(titre, __ctx, true, __cb);
+    }
+
+    private Ice.AsyncResult begin_getArtiste(String titre, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
+    {
+        __checkAsyncTwowayOnly(__getArtiste_name);
+        IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __getArtiste_name, __cb);
+        try
+        {
+            __result.__prepare(__getArtiste_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
+            IceInternal.BasicStream __os = __result.__startWriteParams(Ice.FormatType.DefaultFormat);
+            __os.writeString(titre);
+            __result.__endWriteParams();
+            __result.__send(true);
+        }
+        catch(Ice.LocalException __ex)
+        {
+            __result.__exceptionAsync(__ex);
+        }
+        return __result;
+    }
+
+    public String end_getArtiste(Ice.AsyncResult __result)
+    {
+        Ice.AsyncResult.__check(__result, this, __getArtiste_name);
+        boolean __ok = __result.__wait();
+        try
+        {
+            if(!__ok)
+            {
+                try
+                {
+                    __result.__throwUserException();
+                }
+                catch(Ice.UserException __ex)
+                {
+                    throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
+                }
+            }
+            IceInternal.BasicStream __is = __result.__startReadParams();
+            String __ret;
+            __ret = __is.readString();
+            __result.__endReadParams();
+            return __ret;
+        }
+        catch(Ice.LocalException ex)
+        {
+            Ice.Instrumentation.InvocationObserver __obsv = __result.__getObserver();
+            if(__obsv != null)
+            {
+                __obsv.failed(ex.ice_name());
+            }
+            throw ex;
+        }
+    }
+
+    private static final String __getCompo_name = "getCompo";
+
+    public String getCompo(String nom)
+    {
+        return getCompo(nom, null, false);
+    }
+
+    public String getCompo(String nom, java.util.Map<String, String> __ctx)
+    {
+        return getCompo(nom, __ctx, true);
+    }
+
+    private String getCompo(String nom, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+    {
+        if(__explicitCtx && __ctx == null)
+        {
+            __ctx = _emptyContext;
+        }
+        final Ice.Instrumentation.InvocationObserver __observer = IceInternal.ObserverHelper.get(this, "getCompo", __ctx);
+        int __cnt = 0;
+        try
+        {
+            while(true)
+            {
+                Ice._ObjectDel __delBase = null;
+                try
+                {
+                    __checkTwowayOnly("getCompo");
+                    __delBase = __getDelegate(false);
+                    _mp3Del __del = (_mp3Del)__delBase;
+                    return __del.getCompo(nom, __ctx, __observer);
+                }
+                catch(IceInternal.LocalExceptionWrapper __ex)
+                {
+                    __handleExceptionWrapper(__delBase, __ex, __observer);
+                }
+                catch(Ice.LocalException __ex)
+                {
+                    __cnt = __handleException(__delBase, __ex, null, __cnt, __observer);
+                }
+            }
+        }
+        finally
+        {
+            if(__observer != null)
+            {
+                __observer.detach();
+            }
+        }
+    }
+
+    public Ice.AsyncResult begin_getCompo(String nom)
+    {
+        return begin_getCompo(nom, null, false, null);
+    }
+
+    public Ice.AsyncResult begin_getCompo(String nom, java.util.Map<String, String> __ctx)
+    {
+        return begin_getCompo(nom, __ctx, true, null);
+    }
+
+    public Ice.AsyncResult begin_getCompo(String nom, Ice.Callback __cb)
+    {
+        return begin_getCompo(nom, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_getCompo(String nom, java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    {
+        return begin_getCompo(nom, __ctx, true, __cb);
+    }
+
+    public Ice.AsyncResult begin_getCompo(String nom, Callback_mp3_getCompo __cb)
+    {
+        return begin_getCompo(nom, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_getCompo(String nom, java.util.Map<String, String> __ctx, Callback_mp3_getCompo __cb)
+    {
+        return begin_getCompo(nom, __ctx, true, __cb);
+    }
+
+    private Ice.AsyncResult begin_getCompo(String nom, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
+    {
+        __checkAsyncTwowayOnly(__getCompo_name);
+        IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __getCompo_name, __cb);
+        try
+        {
+            __result.__prepare(__getCompo_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
+            IceInternal.BasicStream __os = __result.__startWriteParams(Ice.FormatType.DefaultFormat);
+            __os.writeString(nom);
+            __result.__endWriteParams();
+            __result.__send(true);
+        }
+        catch(Ice.LocalException __ex)
+        {
+            __result.__exceptionAsync(__ex);
+        }
+        return __result;
+    }
+
+    public String end_getCompo(Ice.AsyncResult __result)
+    {
+        Ice.AsyncResult.__check(__result, this, __getCompo_name);
+        boolean __ok = __result.__wait();
+        try
+        {
+            if(!__ok)
+            {
+                try
+                {
+                    __result.__throwUserException();
+                }
+                catch(Ice.UserException __ex)
+                {
+                    throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
+                }
+            }
+            IceInternal.BasicStream __is = __result.__startReadParams();
+            String __ret;
+            __ret = __is.readString();
+            __result.__endReadParams();
+            return __ret;
+        }
+        catch(Ice.LocalException ex)
+        {
+            Ice.Instrumentation.InvocationObserver __obsv = __result.__getObserver();
+            if(__obsv != null)
+            {
+                __obsv.failed(ex.ice_name());
+            }
+            throw ex;
+        }
     }
 
     private static final String __getToken_name = "getToken";
@@ -366,17 +666,17 @@ public final class mp3PrxHelper extends Ice.ObjectPrxHelperBase implements mp3Pr
 
     private static final String __jouerMP3_name = "jouerMP3";
 
-    public String jouerMP3(String nom)
+    public String jouerMP3(String titre)
     {
-        return jouerMP3(nom, null, false);
+        return jouerMP3(titre, null, false);
     }
 
-    public String jouerMP3(String nom, java.util.Map<String, String> __ctx)
+    public String jouerMP3(String titre, java.util.Map<String, String> __ctx)
     {
-        return jouerMP3(nom, __ctx, true);
+        return jouerMP3(titre, __ctx, true);
     }
 
-    private String jouerMP3(String nom, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+    private String jouerMP3(String titre, java.util.Map<String, String> __ctx, boolean __explicitCtx)
     {
         if(__explicitCtx && __ctx == null)
         {
@@ -394,7 +694,7 @@ public final class mp3PrxHelper extends Ice.ObjectPrxHelperBase implements mp3Pr
                     __checkTwowayOnly("jouerMP3");
                     __delBase = __getDelegate(false);
                     _mp3Del __del = (_mp3Del)__delBase;
-                    return __del.jouerMP3(nom, __ctx, __observer);
+                    return __del.jouerMP3(titre, __ctx, __observer);
                 }
                 catch(IceInternal.LocalExceptionWrapper __ex)
                 {
@@ -415,37 +715,37 @@ public final class mp3PrxHelper extends Ice.ObjectPrxHelperBase implements mp3Pr
         }
     }
 
-    public Ice.AsyncResult begin_jouerMP3(String nom)
+    public Ice.AsyncResult begin_jouerMP3(String titre)
     {
-        return begin_jouerMP3(nom, null, false, null);
+        return begin_jouerMP3(titre, null, false, null);
     }
 
-    public Ice.AsyncResult begin_jouerMP3(String nom, java.util.Map<String, String> __ctx)
+    public Ice.AsyncResult begin_jouerMP3(String titre, java.util.Map<String, String> __ctx)
     {
-        return begin_jouerMP3(nom, __ctx, true, null);
+        return begin_jouerMP3(titre, __ctx, true, null);
     }
 
-    public Ice.AsyncResult begin_jouerMP3(String nom, Ice.Callback __cb)
+    public Ice.AsyncResult begin_jouerMP3(String titre, Ice.Callback __cb)
     {
-        return begin_jouerMP3(nom, null, false, __cb);
+        return begin_jouerMP3(titre, null, false, __cb);
     }
 
-    public Ice.AsyncResult begin_jouerMP3(String nom, java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    public Ice.AsyncResult begin_jouerMP3(String titre, java.util.Map<String, String> __ctx, Ice.Callback __cb)
     {
-        return begin_jouerMP3(nom, __ctx, true, __cb);
+        return begin_jouerMP3(titre, __ctx, true, __cb);
     }
 
-    public Ice.AsyncResult begin_jouerMP3(String nom, Callback_mp3_jouerMP3 __cb)
+    public Ice.AsyncResult begin_jouerMP3(String titre, Callback_mp3_jouerMP3 __cb)
     {
-        return begin_jouerMP3(nom, null, false, __cb);
+        return begin_jouerMP3(titre, null, false, __cb);
     }
 
-    public Ice.AsyncResult begin_jouerMP3(String nom, java.util.Map<String, String> __ctx, Callback_mp3_jouerMP3 __cb)
+    public Ice.AsyncResult begin_jouerMP3(String titre, java.util.Map<String, String> __ctx, Callback_mp3_jouerMP3 __cb)
     {
-        return begin_jouerMP3(nom, __ctx, true, __cb);
+        return begin_jouerMP3(titre, __ctx, true, __cb);
     }
 
-    private Ice.AsyncResult begin_jouerMP3(String nom, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
+    private Ice.AsyncResult begin_jouerMP3(String titre, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
     {
         __checkAsyncTwowayOnly(__jouerMP3_name);
         IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __jouerMP3_name, __cb);
@@ -453,7 +753,7 @@ public final class mp3PrxHelper extends Ice.ObjectPrxHelperBase implements mp3Pr
         {
             __result.__prepare(__jouerMP3_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
             IceInternal.BasicStream __os = __result.__startWriteParams(Ice.FormatType.DefaultFormat);
-            __os.writeString(nom);
+            __os.writeString(titre);
             __result.__endWriteParams();
             __result.__send(true);
         }
@@ -734,17 +1034,17 @@ public final class mp3PrxHelper extends Ice.ObjectPrxHelperBase implements mp3Pr
 
     private static final String __rechercherMP3_name = "rechercherMP3";
 
-    public boolean rechercherMP3(String nom)
+    public boolean rechercherMP3(String titre)
     {
-        return rechercherMP3(nom, null, false);
+        return rechercherMP3(titre, null, false);
     }
 
-    public boolean rechercherMP3(String nom, java.util.Map<String, String> __ctx)
+    public boolean rechercherMP3(String titre, java.util.Map<String, String> __ctx)
     {
-        return rechercherMP3(nom, __ctx, true);
+        return rechercherMP3(titre, __ctx, true);
     }
 
-    private boolean rechercherMP3(String nom, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+    private boolean rechercherMP3(String titre, java.util.Map<String, String> __ctx, boolean __explicitCtx)
     {
         if(__explicitCtx && __ctx == null)
         {
@@ -762,7 +1062,7 @@ public final class mp3PrxHelper extends Ice.ObjectPrxHelperBase implements mp3Pr
                     __checkTwowayOnly("rechercherMP3");
                     __delBase = __getDelegate(false);
                     _mp3Del __del = (_mp3Del)__delBase;
-                    return __del.rechercherMP3(nom, __ctx, __observer);
+                    return __del.rechercherMP3(titre, __ctx, __observer);
                 }
                 catch(IceInternal.LocalExceptionWrapper __ex)
                 {
@@ -783,37 +1083,37 @@ public final class mp3PrxHelper extends Ice.ObjectPrxHelperBase implements mp3Pr
         }
     }
 
-    public Ice.AsyncResult begin_rechercherMP3(String nom)
+    public Ice.AsyncResult begin_rechercherMP3(String titre)
     {
-        return begin_rechercherMP3(nom, null, false, null);
+        return begin_rechercherMP3(titre, null, false, null);
     }
 
-    public Ice.AsyncResult begin_rechercherMP3(String nom, java.util.Map<String, String> __ctx)
+    public Ice.AsyncResult begin_rechercherMP3(String titre, java.util.Map<String, String> __ctx)
     {
-        return begin_rechercherMP3(nom, __ctx, true, null);
+        return begin_rechercherMP3(titre, __ctx, true, null);
     }
 
-    public Ice.AsyncResult begin_rechercherMP3(String nom, Ice.Callback __cb)
+    public Ice.AsyncResult begin_rechercherMP3(String titre, Ice.Callback __cb)
     {
-        return begin_rechercherMP3(nom, null, false, __cb);
+        return begin_rechercherMP3(titre, null, false, __cb);
     }
 
-    public Ice.AsyncResult begin_rechercherMP3(String nom, java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    public Ice.AsyncResult begin_rechercherMP3(String titre, java.util.Map<String, String> __ctx, Ice.Callback __cb)
     {
-        return begin_rechercherMP3(nom, __ctx, true, __cb);
+        return begin_rechercherMP3(titre, __ctx, true, __cb);
     }
 
-    public Ice.AsyncResult begin_rechercherMP3(String nom, Callback_mp3_rechercherMP3 __cb)
+    public Ice.AsyncResult begin_rechercherMP3(String titre, Callback_mp3_rechercherMP3 __cb)
     {
-        return begin_rechercherMP3(nom, null, false, __cb);
+        return begin_rechercherMP3(titre, null, false, __cb);
     }
 
-    public Ice.AsyncResult begin_rechercherMP3(String nom, java.util.Map<String, String> __ctx, Callback_mp3_rechercherMP3 __cb)
+    public Ice.AsyncResult begin_rechercherMP3(String titre, java.util.Map<String, String> __ctx, Callback_mp3_rechercherMP3 __cb)
     {
-        return begin_rechercherMP3(nom, __ctx, true, __cb);
+        return begin_rechercherMP3(titre, __ctx, true, __cb);
     }
 
-    private Ice.AsyncResult begin_rechercherMP3(String nom, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
+    private Ice.AsyncResult begin_rechercherMP3(String titre, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
     {
         __checkAsyncTwowayOnly(__rechercherMP3_name);
         IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __rechercherMP3_name, __cb);
@@ -821,7 +1121,7 @@ public final class mp3PrxHelper extends Ice.ObjectPrxHelperBase implements mp3Pr
         {
             __result.__prepare(__rechercherMP3_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
             IceInternal.BasicStream __os = __result.__startWriteParams(Ice.FormatType.DefaultFormat);
-            __os.writeString(nom);
+            __os.writeString(titre);
             __result.__endWriteParams();
             __result.__send(true);
         }
@@ -970,17 +1270,17 @@ public final class mp3PrxHelper extends Ice.ObjectPrxHelperBase implements mp3Pr
 
     private static final String __supprimerMP3_name = "supprimerMP3";
 
-    public boolean supprimerMP3(String nom)
+    public boolean supprimerMP3(String titre)
     {
-        return supprimerMP3(nom, null, false);
+        return supprimerMP3(titre, null, false);
     }
 
-    public boolean supprimerMP3(String nom, java.util.Map<String, String> __ctx)
+    public boolean supprimerMP3(String titre, java.util.Map<String, String> __ctx)
     {
-        return supprimerMP3(nom, __ctx, true);
+        return supprimerMP3(titre, __ctx, true);
     }
 
-    private boolean supprimerMP3(String nom, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+    private boolean supprimerMP3(String titre, java.util.Map<String, String> __ctx, boolean __explicitCtx)
     {
         if(__explicitCtx && __ctx == null)
         {
@@ -998,7 +1298,7 @@ public final class mp3PrxHelper extends Ice.ObjectPrxHelperBase implements mp3Pr
                     __checkTwowayOnly("supprimerMP3");
                     __delBase = __getDelegate(false);
                     _mp3Del __del = (_mp3Del)__delBase;
-                    return __del.supprimerMP3(nom, __ctx, __observer);
+                    return __del.supprimerMP3(titre, __ctx, __observer);
                 }
                 catch(IceInternal.LocalExceptionWrapper __ex)
                 {
@@ -1019,37 +1319,37 @@ public final class mp3PrxHelper extends Ice.ObjectPrxHelperBase implements mp3Pr
         }
     }
 
-    public Ice.AsyncResult begin_supprimerMP3(String nom)
+    public Ice.AsyncResult begin_supprimerMP3(String titre)
     {
-        return begin_supprimerMP3(nom, null, false, null);
+        return begin_supprimerMP3(titre, null, false, null);
     }
 
-    public Ice.AsyncResult begin_supprimerMP3(String nom, java.util.Map<String, String> __ctx)
+    public Ice.AsyncResult begin_supprimerMP3(String titre, java.util.Map<String, String> __ctx)
     {
-        return begin_supprimerMP3(nom, __ctx, true, null);
+        return begin_supprimerMP3(titre, __ctx, true, null);
     }
 
-    public Ice.AsyncResult begin_supprimerMP3(String nom, Ice.Callback __cb)
+    public Ice.AsyncResult begin_supprimerMP3(String titre, Ice.Callback __cb)
     {
-        return begin_supprimerMP3(nom, null, false, __cb);
+        return begin_supprimerMP3(titre, null, false, __cb);
     }
 
-    public Ice.AsyncResult begin_supprimerMP3(String nom, java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    public Ice.AsyncResult begin_supprimerMP3(String titre, java.util.Map<String, String> __ctx, Ice.Callback __cb)
     {
-        return begin_supprimerMP3(nom, __ctx, true, __cb);
+        return begin_supprimerMP3(titre, __ctx, true, __cb);
     }
 
-    public Ice.AsyncResult begin_supprimerMP3(String nom, Callback_mp3_supprimerMP3 __cb)
+    public Ice.AsyncResult begin_supprimerMP3(String titre, Callback_mp3_supprimerMP3 __cb)
     {
-        return begin_supprimerMP3(nom, null, false, __cb);
+        return begin_supprimerMP3(titre, null, false, __cb);
     }
 
-    public Ice.AsyncResult begin_supprimerMP3(String nom, java.util.Map<String, String> __ctx, Callback_mp3_supprimerMP3 __cb)
+    public Ice.AsyncResult begin_supprimerMP3(String titre, java.util.Map<String, String> __ctx, Callback_mp3_supprimerMP3 __cb)
     {
-        return begin_supprimerMP3(nom, __ctx, true, __cb);
+        return begin_supprimerMP3(titre, __ctx, true, __cb);
     }
 
-    private Ice.AsyncResult begin_supprimerMP3(String nom, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
+    private Ice.AsyncResult begin_supprimerMP3(String titre, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
     {
         __checkAsyncTwowayOnly(__supprimerMP3_name);
         IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __supprimerMP3_name, __cb);
@@ -1057,7 +1357,7 @@ public final class mp3PrxHelper extends Ice.ObjectPrxHelperBase implements mp3Pr
         {
             __result.__prepare(__supprimerMP3_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
             IceInternal.BasicStream __os = __result.__startWriteParams(Ice.FormatType.DefaultFormat);
-            __os.writeString(nom);
+            __os.writeString(titre);
             __result.__endWriteParams();
             __result.__send(true);
         }

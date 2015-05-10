@@ -23,17 +23,20 @@ package Serveur;
 public final class _mp3DelM extends Ice._ObjectDelM implements _mp3Del
 {
     public void
-    ajouterMP3(String nom, String url, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
+    envoyerMusique(String titre, String artiste, String album, String compo, byte[] musique, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
         throws IceInternal.LocalExceptionWrapper
     {
-        IceInternal.Outgoing __og = __handler.getOutgoing("ajouterMP3", Ice.OperationMode.Normal, __ctx, __observer);
+        IceInternal.Outgoing __og = __handler.getOutgoing("envoyerMusique", Ice.OperationMode.Normal, __ctx, __observer);
         try
         {
             try
             {
                 IceInternal.BasicStream __os = __og.startWriteParams(Ice.FormatType.DefaultFormat);
-                __os.writeString(nom);
-                __os.writeString(url);
+                __os.writeString(titre);
+                __os.writeString(artiste);
+                __os.writeString(album);
+                __os.writeString(compo);
+                MusiqueByteHelper.write(__os, musique);
                 __og.endWriteParams();
             }
             catch(Ice.LocalException __ex)
@@ -70,18 +73,17 @@ public final class _mp3DelM extends Ice._ObjectDelM implements _mp3Del
         }
     }
 
-    public void
-    envoyerMusique(String nom, byte[] musique, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
+    public String
+    getAlbum(String nom, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
         throws IceInternal.LocalExceptionWrapper
     {
-        IceInternal.Outgoing __og = __handler.getOutgoing("envoyerMusique", Ice.OperationMode.Normal, __ctx, __observer);
+        IceInternal.Outgoing __og = __handler.getOutgoing("getAlbum", Ice.OperationMode.Normal, __ctx, __observer);
         try
         {
             try
             {
                 IceInternal.BasicStream __os = __og.startWriteParams(Ice.FormatType.DefaultFormat);
                 __os.writeString(nom);
-                MusiqueByteHelper.write(__os, musique);
                 __og.endWriteParams();
             }
             catch(Ice.LocalException __ex)
@@ -89,27 +91,124 @@ public final class _mp3DelM extends Ice._ObjectDelM implements _mp3Del
                 __og.abort(__ex);
             }
             boolean __ok = __og.invoke();
-            if(__og.hasResponse())
+            try
             {
-                try
+                if(!__ok)
                 {
-                    if(!__ok)
+                    try
                     {
-                        try
-                        {
-                            __og.throwUserException();
-                        }
-                        catch(Ice.UserException __ex)
-                        {
-                            throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
-                        }
+                        __og.throwUserException();
                     }
-                    __og.readEmptyParams();
+                    catch(Ice.UserException __ex)
+                    {
+                        throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
+                    }
                 }
-                catch(Ice.LocalException __ex)
+                IceInternal.BasicStream __is = __og.startReadParams();
+                String __ret;
+                __ret = __is.readString();
+                __og.endReadParams();
+                return __ret;
+            }
+            catch(Ice.LocalException __ex)
+            {
+                throw new IceInternal.LocalExceptionWrapper(__ex, false);
+            }
+        }
+        finally
+        {
+            __handler.reclaimOutgoing(__og);
+        }
+    }
+
+    public String
+    getArtiste(String titre, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
+        throws IceInternal.LocalExceptionWrapper
+    {
+        IceInternal.Outgoing __og = __handler.getOutgoing("getArtiste", Ice.OperationMode.Normal, __ctx, __observer);
+        try
+        {
+            try
+            {
+                IceInternal.BasicStream __os = __og.startWriteParams(Ice.FormatType.DefaultFormat);
+                __os.writeString(titre);
+                __og.endWriteParams();
+            }
+            catch(Ice.LocalException __ex)
+            {
+                __og.abort(__ex);
+            }
+            boolean __ok = __og.invoke();
+            try
+            {
+                if(!__ok)
                 {
-                    throw new IceInternal.LocalExceptionWrapper(__ex, false);
+                    try
+                    {
+                        __og.throwUserException();
+                    }
+                    catch(Ice.UserException __ex)
+                    {
+                        throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
+                    }
                 }
+                IceInternal.BasicStream __is = __og.startReadParams();
+                String __ret;
+                __ret = __is.readString();
+                __og.endReadParams();
+                return __ret;
+            }
+            catch(Ice.LocalException __ex)
+            {
+                throw new IceInternal.LocalExceptionWrapper(__ex, false);
+            }
+        }
+        finally
+        {
+            __handler.reclaimOutgoing(__og);
+        }
+    }
+
+    public String
+    getCompo(String nom, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
+        throws IceInternal.LocalExceptionWrapper
+    {
+        IceInternal.Outgoing __og = __handler.getOutgoing("getCompo", Ice.OperationMode.Normal, __ctx, __observer);
+        try
+        {
+            try
+            {
+                IceInternal.BasicStream __os = __og.startWriteParams(Ice.FormatType.DefaultFormat);
+                __os.writeString(nom);
+                __og.endWriteParams();
+            }
+            catch(Ice.LocalException __ex)
+            {
+                __og.abort(__ex);
+            }
+            boolean __ok = __og.invoke();
+            try
+            {
+                if(!__ok)
+                {
+                    try
+                    {
+                        __og.throwUserException();
+                    }
+                    catch(Ice.UserException __ex)
+                    {
+                        throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
+                    }
+                }
+                IceInternal.BasicStream __is = __og.startReadParams();
+                String __ret;
+                __ret = __is.readString();
+                __og.endReadParams();
+                return __ret;
+            }
+            catch(Ice.LocalException __ex)
+            {
+                throw new IceInternal.LocalExceptionWrapper(__ex, false);
             }
         }
         finally
@@ -158,7 +257,7 @@ public final class _mp3DelM extends Ice._ObjectDelM implements _mp3Del
     }
 
     public String
-    jouerMP3(String nom, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
+    jouerMP3(String titre, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
         throws IceInternal.LocalExceptionWrapper
     {
         IceInternal.Outgoing __og = __handler.getOutgoing("jouerMP3", Ice.OperationMode.Normal, __ctx, __observer);
@@ -167,7 +266,7 @@ public final class _mp3DelM extends Ice._ObjectDelM implements _mp3Del
             try
             {
                 IceInternal.BasicStream __os = __og.startWriteParams(Ice.FormatType.DefaultFormat);
-                __os.writeString(nom);
+                __os.writeString(titre);
                 __og.endWriteParams();
             }
             catch(Ice.LocalException __ex)
@@ -283,7 +382,7 @@ public final class _mp3DelM extends Ice._ObjectDelM implements _mp3Del
     }
 
     public boolean
-    rechercherMP3(String nom, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
+    rechercherMP3(String titre, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
         throws IceInternal.LocalExceptionWrapper
     {
         IceInternal.Outgoing __og = __handler.getOutgoing("rechercherMP3", Ice.OperationMode.Normal, __ctx, __observer);
@@ -292,7 +391,7 @@ public final class _mp3DelM extends Ice._ObjectDelM implements _mp3Del
             try
             {
                 IceInternal.BasicStream __os = __og.startWriteParams(Ice.FormatType.DefaultFormat);
-                __os.writeString(nom);
+                __os.writeString(titre);
                 __og.endWriteParams();
             }
             catch(Ice.LocalException __ex)
@@ -369,7 +468,7 @@ public final class _mp3DelM extends Ice._ObjectDelM implements _mp3Del
     }
 
     public boolean
-    supprimerMP3(String nom, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
+    supprimerMP3(String titre, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __observer)
         throws IceInternal.LocalExceptionWrapper
     {
         IceInternal.Outgoing __og = __handler.getOutgoing("supprimerMP3", Ice.OperationMode.Normal, __ctx, __observer);
@@ -378,7 +477,7 @@ public final class _mp3DelM extends Ice._ObjectDelM implements _mp3Del
             try
             {
                 IceInternal.BasicStream __os = __og.startWriteParams(Ice.FormatType.DefaultFormat);
-                __os.writeString(nom);
+                __os.writeString(titre);
                 __og.endWriteParams();
             }
             catch(Ice.LocalException __ex)

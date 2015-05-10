@@ -22,19 +22,25 @@ package Serveur;
 
 public interface _mp3Del extends Ice._ObjectDel
 {
-    void ajouterMP3(String nom, String url, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __obsv)
+    boolean supprimerMP3(String titre, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __obsv)
         throws IceInternal.LocalExceptionWrapper;
 
-    boolean supprimerMP3(String nom, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __obsv)
+    boolean rechercherMP3(String titre, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __obsv)
         throws IceInternal.LocalExceptionWrapper;
 
-    boolean rechercherMP3(String nom, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __obsv)
-        throws IceInternal.LocalExceptionWrapper;
-
-    String jouerMP3(String nom, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __obsv)
+    String jouerMP3(String titre, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __obsv)
         throws IceInternal.LocalExceptionWrapper;
 
     String getToken(java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __obsv)
+        throws IceInternal.LocalExceptionWrapper;
+
+    String getArtiste(String titre, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __obsv)
+        throws IceInternal.LocalExceptionWrapper;
+
+    String getAlbum(String nom, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __obsv)
+        throws IceInternal.LocalExceptionWrapper;
+
+    String getCompo(String nom, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __obsv)
         throws IceInternal.LocalExceptionWrapper;
 
     void play(java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __obsv)
@@ -43,7 +49,7 @@ public interface _mp3Del extends Ice._ObjectDel
     void stop(java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __obsv)
         throws IceInternal.LocalExceptionWrapper;
 
-    void envoyerMusique(String nom, byte[] musique, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __obsv)
+    void envoyerMusique(String titre, String artiste, String album, String compo, byte[] musique, java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __obsv)
         throws IceInternal.LocalExceptionWrapper;
 
     String[] listerMP3(java.util.Map<String, String> __ctx, Ice.Instrumentation.InvocationObserver __obsv)

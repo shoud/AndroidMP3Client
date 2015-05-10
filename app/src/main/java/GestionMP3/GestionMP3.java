@@ -20,7 +20,10 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
     private Ice.ObjectPrx base = null;
     private Serveur.mp3Prx mp3 = null;
     private MediaPlayer mp = null;
-    private String nom = null;
+    private String titre = null;
+    private String artiste = null;
+    private String album = null;
+    private String compo = null;
     private String token = "";
 
     public Serveur.mp3Prx getMp3()
@@ -42,14 +45,17 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
 
     /**
      * Permet de lancer la lecture d'un MP3
-     * @param nom Le nom du mp3 à lancer
+     * @param titre Le nom du mp3 à lancer
      */
-    public void jouer(String nom) throws IOException
+    public void jouer(String titre) throws IOException
     {
 
         mp.reset();
-        this.nom = nom;
-        mp3.jouerMP3(nom);
+        this.titre = titre;
+        this.artiste = mp3.getArtiste(titre);
+        this.album = mp3.getAlbum(titre);
+        this.compo = mp3.getCompo(titre);
+        mp3.jouerMP3(titre);
         this.token = mp3.getToken();
         mp3.play();
         String url = "http://shoud.ovh:8090/" + token + ".mp3"; // your URL here
@@ -74,13 +80,6 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
     {
         mp.start();
     }
-    /**
-     * Permet de rajouter un MP3
-     */
-    public void ajouter(String nom)
-    {
-        mp3.ajouterMP3(nom,"test");
-    }
 
     /**
      * Permet de rechercher un MP3
@@ -100,11 +99,23 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
      */
     public boolean supprimer()
     {
-        return mp3.supprimerMP3(this.nom);
+        return mp3.supprimerMP3(this.titre);
     }
-    public String getNom()
+    public String getTitre()
     {
-        return this.nom;
+        return this.titre;
+    }
+    public String getAlbum()
+    {
+        return this.album;
+    }
+    public String getArtiste()
+    {
+        return this.artiste;
+    }
+    public String getCompo()
+    {
+        return this.compo;
     }
     /**
      * Permet de récupérer la liste des MP3

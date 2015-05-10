@@ -22,75 +22,57 @@ package Serveur;
 
 public interface mp3Prx extends Ice.ObjectPrx
 {
-    public void ajouterMP3(String nom, String url);
+    public boolean supprimerMP3(String titre);
 
-    public void ajouterMP3(String nom, String url, java.util.Map<String, String> __ctx);
+    public boolean supprimerMP3(String titre, java.util.Map<String, String> __ctx);
 
-    public Ice.AsyncResult begin_ajouterMP3(String nom, String url);
+    public Ice.AsyncResult begin_supprimerMP3(String titre);
 
-    public Ice.AsyncResult begin_ajouterMP3(String nom, String url, java.util.Map<String, String> __ctx);
+    public Ice.AsyncResult begin_supprimerMP3(String titre, java.util.Map<String, String> __ctx);
 
-    public Ice.AsyncResult begin_ajouterMP3(String nom, String url, Ice.Callback __cb);
+    public Ice.AsyncResult begin_supprimerMP3(String titre, Ice.Callback __cb);
 
-    public Ice.AsyncResult begin_ajouterMP3(String nom, String url, java.util.Map<String, String> __ctx, Ice.Callback __cb);
+    public Ice.AsyncResult begin_supprimerMP3(String titre, java.util.Map<String, String> __ctx, Ice.Callback __cb);
 
-    public Ice.AsyncResult begin_ajouterMP3(String nom, String url, Callback_mp3_ajouterMP3 __cb);
+    public Ice.AsyncResult begin_supprimerMP3(String titre, Callback_mp3_supprimerMP3 __cb);
 
-    public Ice.AsyncResult begin_ajouterMP3(String nom, String url, java.util.Map<String, String> __ctx, Callback_mp3_ajouterMP3 __cb);
-
-    public void end_ajouterMP3(Ice.AsyncResult __result);
-
-    public boolean supprimerMP3(String nom);
-
-    public boolean supprimerMP3(String nom, java.util.Map<String, String> __ctx);
-
-    public Ice.AsyncResult begin_supprimerMP3(String nom);
-
-    public Ice.AsyncResult begin_supprimerMP3(String nom, java.util.Map<String, String> __ctx);
-
-    public Ice.AsyncResult begin_supprimerMP3(String nom, Ice.Callback __cb);
-
-    public Ice.AsyncResult begin_supprimerMP3(String nom, java.util.Map<String, String> __ctx, Ice.Callback __cb);
-
-    public Ice.AsyncResult begin_supprimerMP3(String nom, Callback_mp3_supprimerMP3 __cb);
-
-    public Ice.AsyncResult begin_supprimerMP3(String nom, java.util.Map<String, String> __ctx, Callback_mp3_supprimerMP3 __cb);
+    public Ice.AsyncResult begin_supprimerMP3(String titre, java.util.Map<String, String> __ctx, Callback_mp3_supprimerMP3 __cb);
 
     public boolean end_supprimerMP3(Ice.AsyncResult __result);
 
-    public boolean rechercherMP3(String nom);
+    public boolean rechercherMP3(String titre);
 
-    public boolean rechercherMP3(String nom, java.util.Map<String, String> __ctx);
+    public boolean rechercherMP3(String titre, java.util.Map<String, String> __ctx);
 
-    public Ice.AsyncResult begin_rechercherMP3(String nom);
+    public Ice.AsyncResult begin_rechercherMP3(String titre);
 
-    public Ice.AsyncResult begin_rechercherMP3(String nom, java.util.Map<String, String> __ctx);
+    public Ice.AsyncResult begin_rechercherMP3(String titre, java.util.Map<String, String> __ctx);
 
-    public Ice.AsyncResult begin_rechercherMP3(String nom, Ice.Callback __cb);
+    public Ice.AsyncResult begin_rechercherMP3(String titre, Ice.Callback __cb);
 
-    public Ice.AsyncResult begin_rechercherMP3(String nom, java.util.Map<String, String> __ctx, Ice.Callback __cb);
+    public Ice.AsyncResult begin_rechercherMP3(String titre, java.util.Map<String, String> __ctx, Ice.Callback __cb);
 
-    public Ice.AsyncResult begin_rechercherMP3(String nom, Callback_mp3_rechercherMP3 __cb);
+    public Ice.AsyncResult begin_rechercherMP3(String titre, Callback_mp3_rechercherMP3 __cb);
 
-    public Ice.AsyncResult begin_rechercherMP3(String nom, java.util.Map<String, String> __ctx, Callback_mp3_rechercherMP3 __cb);
+    public Ice.AsyncResult begin_rechercherMP3(String titre, java.util.Map<String, String> __ctx, Callback_mp3_rechercherMP3 __cb);
 
     public boolean end_rechercherMP3(Ice.AsyncResult __result);
 
-    public String jouerMP3(String nom);
+    public String jouerMP3(String titre);
 
-    public String jouerMP3(String nom, java.util.Map<String, String> __ctx);
+    public String jouerMP3(String titre, java.util.Map<String, String> __ctx);
 
-    public Ice.AsyncResult begin_jouerMP3(String nom);
+    public Ice.AsyncResult begin_jouerMP3(String titre);
 
-    public Ice.AsyncResult begin_jouerMP3(String nom, java.util.Map<String, String> __ctx);
+    public Ice.AsyncResult begin_jouerMP3(String titre, java.util.Map<String, String> __ctx);
 
-    public Ice.AsyncResult begin_jouerMP3(String nom, Ice.Callback __cb);
+    public Ice.AsyncResult begin_jouerMP3(String titre, Ice.Callback __cb);
 
-    public Ice.AsyncResult begin_jouerMP3(String nom, java.util.Map<String, String> __ctx, Ice.Callback __cb);
+    public Ice.AsyncResult begin_jouerMP3(String titre, java.util.Map<String, String> __ctx, Ice.Callback __cb);
 
-    public Ice.AsyncResult begin_jouerMP3(String nom, Callback_mp3_jouerMP3 __cb);
+    public Ice.AsyncResult begin_jouerMP3(String titre, Callback_mp3_jouerMP3 __cb);
 
-    public Ice.AsyncResult begin_jouerMP3(String nom, java.util.Map<String, String> __ctx, Callback_mp3_jouerMP3 __cb);
+    public Ice.AsyncResult begin_jouerMP3(String titre, java.util.Map<String, String> __ctx, Callback_mp3_jouerMP3 __cb);
 
     public String end_jouerMP3(Ice.AsyncResult __result);
 
@@ -111,6 +93,60 @@ public interface mp3Prx extends Ice.ObjectPrx
     public Ice.AsyncResult begin_getToken(java.util.Map<String, String> __ctx, Callback_mp3_getToken __cb);
 
     public String end_getToken(Ice.AsyncResult __result);
+
+    public String getArtiste(String titre);
+
+    public String getArtiste(String titre, java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_getArtiste(String titre);
+
+    public Ice.AsyncResult begin_getArtiste(String titre, java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_getArtiste(String titre, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_getArtiste(String titre, java.util.Map<String, String> __ctx, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_getArtiste(String titre, Callback_mp3_getArtiste __cb);
+
+    public Ice.AsyncResult begin_getArtiste(String titre, java.util.Map<String, String> __ctx, Callback_mp3_getArtiste __cb);
+
+    public String end_getArtiste(Ice.AsyncResult __result);
+
+    public String getAlbum(String nom);
+
+    public String getAlbum(String nom, java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_getAlbum(String nom);
+
+    public Ice.AsyncResult begin_getAlbum(String nom, java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_getAlbum(String nom, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_getAlbum(String nom, java.util.Map<String, String> __ctx, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_getAlbum(String nom, Callback_mp3_getAlbum __cb);
+
+    public Ice.AsyncResult begin_getAlbum(String nom, java.util.Map<String, String> __ctx, Callback_mp3_getAlbum __cb);
+
+    public String end_getAlbum(Ice.AsyncResult __result);
+
+    public String getCompo(String nom);
+
+    public String getCompo(String nom, java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_getCompo(String nom);
+
+    public Ice.AsyncResult begin_getCompo(String nom, java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_getCompo(String nom, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_getCompo(String nom, java.util.Map<String, String> __ctx, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_getCompo(String nom, Callback_mp3_getCompo __cb);
+
+    public Ice.AsyncResult begin_getCompo(String nom, java.util.Map<String, String> __ctx, Callback_mp3_getCompo __cb);
+
+    public String end_getCompo(Ice.AsyncResult __result);
 
     public void play();
 
@@ -148,21 +184,21 @@ public interface mp3Prx extends Ice.ObjectPrx
 
     public void end_stop(Ice.AsyncResult __result);
 
-    public void envoyerMusique(String nom, byte[] musique);
+    public void envoyerMusique(String titre, String artiste, String album, String compo, byte[] musique);
 
-    public void envoyerMusique(String nom, byte[] musique, java.util.Map<String, String> __ctx);
+    public void envoyerMusique(String titre, String artiste, String album, String compo, byte[] musique, java.util.Map<String, String> __ctx);
 
-    public Ice.AsyncResult begin_envoyerMusique(String nom, byte[] musique);
+    public Ice.AsyncResult begin_envoyerMusique(String titre, String artiste, String album, String compo, byte[] musique);
 
-    public Ice.AsyncResult begin_envoyerMusique(String nom, byte[] musique, java.util.Map<String, String> __ctx);
+    public Ice.AsyncResult begin_envoyerMusique(String titre, String artiste, String album, String compo, byte[] musique, java.util.Map<String, String> __ctx);
 
-    public Ice.AsyncResult begin_envoyerMusique(String nom, byte[] musique, Ice.Callback __cb);
+    public Ice.AsyncResult begin_envoyerMusique(String titre, String artiste, String album, String compo, byte[] musique, Ice.Callback __cb);
 
-    public Ice.AsyncResult begin_envoyerMusique(String nom, byte[] musique, java.util.Map<String, String> __ctx, Ice.Callback __cb);
+    public Ice.AsyncResult begin_envoyerMusique(String titre, String artiste, String album, String compo, byte[] musique, java.util.Map<String, String> __ctx, Ice.Callback __cb);
 
-    public Ice.AsyncResult begin_envoyerMusique(String nom, byte[] musique, Callback_mp3_envoyerMusique __cb);
+    public Ice.AsyncResult begin_envoyerMusique(String titre, String artiste, String album, String compo, byte[] musique, Callback_mp3_envoyerMusique __cb);
 
-    public Ice.AsyncResult begin_envoyerMusique(String nom, byte[] musique, java.util.Map<String, String> __ctx, Callback_mp3_envoyerMusique __cb);
+    public Ice.AsyncResult begin_envoyerMusique(String titre, String artiste, String album, String compo, byte[] musique, java.util.Map<String, String> __ctx, Callback_mp3_envoyerMusique __cb);
 
     public void end_envoyerMusique(Ice.AsyncResult __result);
 

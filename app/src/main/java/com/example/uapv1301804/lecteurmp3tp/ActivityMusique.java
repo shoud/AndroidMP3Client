@@ -29,7 +29,7 @@ public class ActivityMusique extends Activity {
         setContentView(R.layout.activity_activity_musique);
 
         fichierMP3 = (FichierMP3) getIntent().getSerializableExtra("FichierMP3");
-        System.out.println(fichierMP3.getNom());
+        System.out.println(fichierMP3.getTitre());
 
 
         tvTitre = (TextView) findViewById(R.id.tTitre);
@@ -39,7 +39,10 @@ public class ActivityMusique extends Activity {
 
         if(fichierMP3 != null)
         {
-           tvTitre.setText(fichierMP3.getNom());
+            tvTitre.setText(fichierMP3.getTitre());
+            tvChanteur.setText(fichierMP3.getArtiste());
+            tvAlbum.setText(fichierMP3.getAlbum());
+            tvCompo.setText(fichierMP3.getCompo());
         }
     }
 

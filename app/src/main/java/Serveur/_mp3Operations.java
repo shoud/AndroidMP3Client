@@ -22,21 +22,25 @@ package Serveur;
 
 public interface _mp3Operations
 {
-    void ajouterMP3(String nom, String url, Ice.Current __current);
+    boolean supprimerMP3(String titre, Ice.Current __current);
 
-    boolean supprimerMP3(String nom, Ice.Current __current);
+    boolean rechercherMP3(String titre, Ice.Current __current);
 
-    boolean rechercherMP3(String nom, Ice.Current __current);
-
-    String jouerMP3(String nom, Ice.Current __current);
+    String jouerMP3(String titre, Ice.Current __current);
 
     String getToken(Ice.Current __current);
+
+    String getArtiste(String titre, Ice.Current __current);
+
+    String getAlbum(String nom, Ice.Current __current);
+
+    String getCompo(String nom, Ice.Current __current);
 
     void play(Ice.Current __current);
 
     void stop(Ice.Current __current);
 
-    void envoyerMusique(String nom, byte[] musique, Ice.Current __current);
+    void envoyerMusique(String titre, String artiste, String album, String compo, byte[] musique, Ice.Current __current);
 
     String[] listerMP3(Ice.Current __current);
 }

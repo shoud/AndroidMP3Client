@@ -19,6 +19,12 @@ public class EnvoyerMusique extends AsyncTask<Void, Integer, Void>
     private String chemin = null;
     //Le titre du MP3
     private String titre = null;
+    //l'artiste
+    private String artiste = null;
+    //Album
+    private String album = null;
+    //Compositeur
+    private String compo = null;
     //La boite de dialogue pour montrer l'envoi du MP3
     private MyProgressDialog dialog = null;
     //Récupération de l'objet permettant de lancer des requets sur le serveur
@@ -36,9 +42,12 @@ public class EnvoyerMusique extends AsyncTask<Void, Integer, Void>
      * @param dialog La boite de dialogue à utiliser lors de l'envoi
      * @param gestionMP3 L'objet permettant de gérer les mp3
      */
-    public EnvoyerMusique(String chemin, String titre, MyProgressDialog dialog, GestionMP3 gestionMP3) {
+    public EnvoyerMusique(String chemin, String titre, String artiste, String album, String compo, MyProgressDialog dialog, GestionMP3 gestionMP3) {
         this.chemin = chemin;
         this.titre = titre;
+        this.artiste = artiste;
+        this.album = album;
+        this.compo = compo;
         this.dialog = dialog;
         this.gestionMP3 = gestionMP3;
         this.mp3 = gestionMP3.getMp3();
@@ -71,14 +80,13 @@ public class EnvoyerMusique extends AsyncTask<Void, Integer, Void>
                 byte[] temp = Arrays.copyOfRange(bytes, offset, end);
                 try {
                     publishProgress(offset);;
-                    mp3.envoyerMusique(titre, temp);
+                    mp3.envoyerMusique(titre, artiste, album, compo, temp);
                 } catch (Exception e) {
                     Log.e("upload", e.toString());
                 }
                 offset += end;
             }
             dialog.dismiss();
-            gestionMP3.ajouter(titre);
         } catch (Exception e) {
             Log.e("upload", e.toString());
         }

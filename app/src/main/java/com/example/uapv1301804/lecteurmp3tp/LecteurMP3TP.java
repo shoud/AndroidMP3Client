@@ -233,7 +233,7 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LecteurMP3TP.this, ActivityMusique.class);
-                intent.putExtra("FichierMP3", new FichierMP3(gestionMP3.getNom()));
+                intent.putExtra("FichierMP3", new FichierMP3(gestionMP3.getTitre(), gestionMP3.getArtiste(), gestionMP3.getAlbum(), gestionMP3.getCompo()));
                 startActivity(intent);
             }
         });
@@ -268,7 +268,7 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
             if (requestCode == 0)
             {
                 String chemin = data.getData().getPath();
-                EnvoyerMusique envoyerMusique = new EnvoyerMusique(chemin, titre, new MyProgressDialog(this), gestionMP3);
+                EnvoyerMusique envoyerMusique = new EnvoyerMusique(chemin, titre, artiste, album, compo, new MyProgressDialog(this), gestionMP3);
                 envoyerMusique.execute();
                 titre = "";
                 artiste = "";

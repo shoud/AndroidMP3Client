@@ -20,27 +20,23 @@
 
 package Serveur;
 
-public interface _mp3OperationsNC
+public abstract class Callback_mp3_getAlbum extends Ice.TwowayCallback
 {
-    boolean supprimerMP3(String titre);
+    public abstract void response(String __ret);
 
-    boolean rechercherMP3(String titre);
-
-    String jouerMP3(String titre);
-
-    String getToken();
-
-    String getArtiste(String titre);
-
-    String getAlbum(String nom);
-
-    String getCompo(String nom);
-
-    void play();
-
-    void stop();
-
-    void envoyerMusique(String titre, String artiste, String album, String compo, byte[] musique);
-
-    String[] listerMP3();
+    public final void __completed(Ice.AsyncResult __result)
+    {
+        mp3Prx __proxy = (mp3Prx)__result.getProxy();
+        String __ret = null;
+        try
+        {
+            __ret = __proxy.end_getAlbum(__result);
+        }
+        catch(Ice.LocalException __ex)
+        {
+            exception(__ex);
+            return;
+        }
+        response(__ret);
+    }
 }

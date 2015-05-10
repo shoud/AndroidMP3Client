@@ -4,20 +4,33 @@ import java.io.Serializable;
 
 public class FichierMP3 implements Serializable
 {
-    private String nom = null;
+    private String titre = null;
+    private String artiste = null;
+    private String album = null;
+    private String compo = null;
 
-    public FichierMP3(String nom)
+    public FichierMP3(String titre, String artiste, String album, String compo)
     {
-        this.nom = nom;
+        this.titre = titre;
+        this.artiste =artiste;
+        this.album = album;
+        this.compo = compo;
     }
 
-    public void setNom(String nom)
+    public String getTitre()
     {
-        this.nom = nom;
+        return this.titre;
     }
-    public String getNom()
+    public String getArtiste()
     {
-        return this.nom;
+        return this.artiste;
     }
-
+    public String getAlbum()
+    {
+        return this.album;
+    }
+    public String getCompo()
+    {
+        return this.compo;
+    }
 }
