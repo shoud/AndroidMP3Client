@@ -84,6 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/micro"
+        android:onClick="btMicro"
         android:layout_alignBottom="@+id/playStop"
         android:layout_toLeftOf="@+id/imageBtSupprimer"
         android:layout_toRightOf="@+id/btAjouter"

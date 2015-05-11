@@ -28,6 +28,7 @@ import GestionMP3.GestionMP3;
 import GestionMP3.FichierMP3;
 import GestionMP3.EnvoyerMusique;
 import GestionMP3.MyProgressDialog;
+import GestionMP3.CommandeVocal;
 
 /**
  * Activité principale de l'application, elle permet :
@@ -54,6 +55,8 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
     private Context context;
     //La boite de dialogue pour ajouter un mp3
     private final static int ID_AJOUTER_MP3_DIALOG = 0;
+    //Commande vocale
+    private CommandeVocal commandeVocal;
 
     private String titre;
     private String artiste;
@@ -109,6 +112,8 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
                 alertDialog.show();
             }
         });
+        //Commandes vocales
+        commandeVocal = new CommandeVocal(this,gestionMP3);
     }
 
     public void init()
@@ -288,6 +293,11 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
             rafraichir();
     }
 
+    public void btMicro(View controlView)
+    {
+        commandeVocal.enregistrement();
+    }
+
     /**
      * Méthode permettant de detecter l'appui sur une touche
      * Utilisé pour réfraichir un live la liste des solutions en fonction d'une recherche
@@ -334,5 +344,9 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
 
         }
         return false;
+    }
+    public ArrayList<String> getListMusique()
+    {
+        return listMusique;
     }
 }
