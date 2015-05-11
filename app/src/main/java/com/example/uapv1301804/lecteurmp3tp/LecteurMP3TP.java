@@ -83,37 +83,45 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
             @Override
             public void onClick(View arg0)
             {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-
-
-                LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                final View alertDialogView = inflater.inflate(R.layout.ajouter_mp3_dialog, null);
-                alertDialogBuilder.setTitle("Ajouter MP3");
-                alertDialogBuilder.setCancelable(false);
-                alertDialogBuilder.setView(alertDialogView);
-                alertDialogBuilder.setPositiveButton("Envoyer", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        //On récupère les EditTexts
-                        EditText etTitre = (EditText)alertDialogView.findViewById(R.id.etTitre);
-                        EditText etArtiste = (EditText)alertDialogView.findViewById(R.id.etArtiste);
-                        EditText etAlbum = (EditText)alertDialogView.findViewById(R.id.etAlbum);
-                        EditText etCompo = (EditText)alertDialogView.findViewById(R.id.etCompo);
-                        //On met à jour les informations de la musique
-                        titre = etTitre.getText().toString();
-                        artiste = etArtiste.getText().toString();
-                        album = etAlbum.getText().toString();
-                        compo = etCompo.getText().toString();
-                        ChoisirEnvoyer();
-                    }
-                });
-                //Création de la boite de dialogue
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                //Afficher la boite de dialogue
-                alertDialog.show();
+                dialogAjouter();
             }
         });
         //Commandes vocales
         commandeVocal = new CommandeVocal(this,gestionMP3);
+    }
+
+    /**
+     * Fenetre permettant de rajouter une musique
+     */
+    public void dialogAjouter()
+    {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+
+        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View alertDialogView = inflater.inflate(R.layout.ajouter_mp3_dialog, null);
+        alertDialogBuilder.setTitle("Ajouter MP3");
+        alertDialogBuilder.setCancelable(false);
+        alertDialogBuilder.setView(alertDialogView);
+        alertDialogBuilder.setPositiveButton("Envoyer", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                //On récupère les EditTexts
+                EditText etTitre = (EditText)alertDialogView.findViewById(R.id.etTitre);
+                EditText etArtiste = (EditText)alertDialogView.findViewById(R.id.etArtiste);
+                EditText etAlbum = (EditText)alertDialogView.findViewById(R.id.etAlbum);
+                EditText etCompo = (EditText)alertDialogView.findViewById(R.id.etCompo);
+                //On met à jour les informations de la musique
+                titre = etTitre.getText().toString();
+                artiste = etArtiste.getText().toString();
+                album = etAlbum.getText().toString();
+                compo = etCompo.getText().toString();
+                ChoisirEnvoyer();
+            }
+        });
+        //Création de la boite de dialogue
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        //Afficher la boite de dialogue
+        alertDialog.show();
     }
 
     public void init()
@@ -295,6 +303,9 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
 
     public void btMicro(View controlView)
     {
+        Button controlButton = (Button)findViewById(R.id.playStop);
+        gestionMP3.pause();
+        controlButton.setText("Play");
         commandeVocal.enregistrement();
     }
 

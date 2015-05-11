@@ -101,6 +101,12 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
     {
         return mp3.supprimerMP3(this.titre);
     }
+
+    public boolean supprimer(String titre)
+    {
+        return mp3.supprimerMP3(titre);
+    }
+
     public String getTitre()
     {
         return this.titre;
