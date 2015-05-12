@@ -103,29 +103,26 @@ public class CommandeVocal
     {
 
         @Override
-        public void onReadyForSpeech(Bundle params) {
-        }
+        public void onReadyForSpeech(Bundle params){}
 
         @Override
-        public void onBeginningOfSpeech() {
-        }
+        public void onBeginningOfSpeech(){}
 
         @Override
-        public void onRmsChanged(float rmsdB) {
-        }
+        public void onRmsChanged(float rmsdB){}
 
         @Override
-        public void onBufferReceived(byte[] buffer) {
-        }
+        public void onBufferReceived(byte[] buffer){}
 
         @Override
-        public void onEndOfSpeech() {
-        }
+        public void onEndOfSpeech(){}
 
         @Override
-        public void onError(int error) {
+        public void onError(int error)
+        {
             String message;
-            switch (error) {
+            switch (error)
+            {
                 case SpeechRecognizer.ERROR_AUDIO:
                     message = "Audio recording error.";
                     break;
@@ -160,7 +157,8 @@ public class CommandeVocal
         }
 
         @Override
-        public void onResults(Bundle results) {
+        public void onResults(Bundle results)
+        {
             List<String> tmp = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
             String titre = null;
             Log.v("BuiltinText", tmp.get(0));
