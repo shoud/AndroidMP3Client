@@ -10,12 +10,12 @@ import android.speech.SpeechRecognizer;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import com.example.uapv1301804.lecteurmp3tp.LecteurMP3TP;
 import com.example.uapv1301804.lecteurmp3tp.R;
+
+import org.json.JSONException;
 
 
 /**
@@ -157,107 +157,24 @@ public class CommandeVocal
         }
 
         @Override
-        public void onResults(Bundle results)
-        {
+        public void onResults(Bundle results) {
             List<String> tmp = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-            String titre = null;
-            Log.v("BuiltinText", tmp.get(0));
-            //On cherche la commande voulue
-            switch(getCommande(tmp.get(0)))
+            //Log.v("BuiltinText", tmp.get(0));
+            System.out.println("Avant le try");
+            try
             {
-                case jouer:
-                {
-                    titre = getTitre(tmp.get(0));
-                    if(titre != null)
-                    {
-                        try {
-                            gestionMP3.jouer(titre);
-                            controlButton.setText("Stop");
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    else
-                        errTitre();
-                    break;
-                }
-                case supprimer:
-                {
-                    titre = getTitre(tmp.get(0));
-                    if(titre != null)
-                    {
-                        gestionMP3.supprimer(titre);
-                        lecteurMP3TP.rafraichir();
-                    }
-                    break;
-                }
-                case rechercher:
-                {
 
-                    break;
-                }
-                case ajouter:
-                {
-                    lecteurMP3TP.dialogAjouter();
-                    break;
-                }
-                case erreur:
-                {
-                    errCommande(tmp.get(0));
-                    break;
-                }
+                //service.MethodToInvoke(...);
+                //System.out.println(">>>>>>>>>>La commande voulue : " + service.getAction(tmp.get(0)));
+                //System.out.println(">>>>>>>>>>>>>>>Le titre voulu" + service.getTitre(tmp.get(0)));
+
+            } catch (Exception e) {
+                System.out.println(e.toString());
             }
-            asr.stopListening();
-            //recordButton.setText(R.string.record);
+            System.out.println("apres le try");
+            stopperEnregistrement();
         }
 
-        /**
-         * Méthode permettant de déterminer la commande voulue
-         * @param tmp la chaine de caractères
-         * @return la commande voulue
-         */
-        public commande getCommande(String tmp)
-        {
-            //Détection de jouer
-            for(String jouer : listJouer)
-                if(tmp.toLowerCase().contains(jouer))
-                    return commande.jouer;
-
-            //Détection de rechercher
-            for(String rechercher : listRechercher)
-                if(tmp.toLowerCase().contains(rechercher))
-                    return commande.rechercher;
-
-            //Détection de supprimer
-            for(String supprimer : listSupprimer)
-                if(tmp.toLowerCase().contains(supprimer))
-                    return commande.supprimer;
-
-            //Détection d'ajouter
-            for(String ajouter : listAjouter)
-                if(tmp.toLowerCase().contains(ajouter))
-                    return commande.ajouter;
-
-            return commande.erreur;
-        }
-
-        /**
-         * Méthode permettant de trouver le titre d'un mp3
-         * lors d'une commande vocale
-         * @param tmp la chaine de caractére
-         * @return le titre de la musique
-         */
-        public String getTitre(String tmp)
-        {
-            //Récupération des titres
-            ArrayList<String> listMusique = lecteurMP3TP.getListMusique();
-            //On cherche si le titre est présent
-            for(String titre : listMusique)
-                if(tmp.toLowerCase().contains(titre.toLowerCase()))
-                    return titre;
-            //Si pas de titre trouvé
-            return null;
-        }
 
         /**
          * Méthode permettant de notifier à l'utilisateur que le titre n'est pas trouvé
