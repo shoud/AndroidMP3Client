@@ -10,12 +10,8 @@ import android.speech.SpeechRecognizer;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.SOAP.CMICommandeMP3WSPortBinding;
 import com.example.uapv1301804.lecteurmp3tp.LecteurMP3TP;
 import com.example.uapv1301804.lecteurmp3tp.R;
 
