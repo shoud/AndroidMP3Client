@@ -50,19 +50,22 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
     public void jouer(String titre) throws IOException
     {
 
-        mp.reset();
-        this.titre = titre;
-        this.artiste = mp3.getArtiste(titre);
-        this.album = mp3.getAlbum(titre);
-        this.compo = mp3.getCompo(titre);
-        mp3.jouerMP3(titre);
-        this.token = mp3.getToken();
-        mp3.play();
-        String url = "http://shoud.ovh:8090/" + token + ".mp3"; // your URL here
-        mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        mp.setDataSource(url);
-        mp.prepare(); // might take long! (for buffering, etc)
-        mp.start();
+        if(titre != null)
+        {
+            mp.reset();
+            this.titre = titre;
+            this.artiste = mp3.getArtiste(titre);
+            this.album = mp3.getAlbum(titre);
+            this.compo = mp3.getCompo(titre);
+            mp3.jouerMP3(titre);
+            this.token = mp3.getToken();
+            mp3.play();
+            String url = "http://shoud.ovh:8090/" + token + ".mp3"; // your URL here
+            mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mp.setDataSource(url);
+            mp.prepare(); // might take long! (for buffering, etc)
+            mp.start();
+        }
     }
 
     /**
@@ -104,7 +107,9 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
 
     public boolean supprimer(String titre)
     {
-        return mp3.supprimerMP3(titre);
+        if(titre != null)
+            return mp3.supprimerMP3(titre);
+        return false;
     }
 
     public String getTitre()

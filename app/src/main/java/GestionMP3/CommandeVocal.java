@@ -10,6 +10,8 @@ import android.speech.SpeechRecognizer;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import com.example.uapv1301804.lecteurmp3tp.LecteurMP3TP;
@@ -159,32 +161,36 @@ public class CommandeVocal
         @Override
         public void onResults(Bundle results) {
             List<String> tmp = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+            String titre;
             //Log.v("BuiltinText", tmp.get(0));
             try
             {
                 String commande = CommandeSWMP3.getAction(tmp.get(0));
                 if(commande.equals("jouer"))
                 {
-                    /*titre = getTitre(tmp.get(0));
+                    titre = CommandeSWMP3.getTitre(tmp.get(0));
+                    System.out.println("Le titre est >>>>>>> : " + titre);
                         if (titre != null) {
                             try {
+                                titre = titrePresent(titre);
                                 gestionMP3.jouer(titre);
                                 controlButton.setText("Stop");
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         } else
-                            errTitre();*/
+                            errTitre();
                 }
                 else
                 {
                     if(commande.equals("supprimer"))
                     {
-                        /*titre = getTitre(tmp.get(0));
+                        titre = CommandeSWMP3.getTitre(tmp.get(0));
                         if (titre != null) {
+                            titre = titrePresent(titre);
                             gestionMP3.supprimer(titre);
                             lecteurMP3TP.rafraichir();
-                        }*/
+                        }
                     }
                     else
                     {
@@ -211,6 +217,17 @@ public class CommandeVocal
             stopperEnregistrement();
         }
 
+        public String titrePresent(String titre)
+        {
+            ArrayList<String> listMusique = new ArrayList<String>(lecteurMP3TP.getListMusique());
+            for(String titreListe : listMusique)
+            {
+                if(titre.toLowerCase().contains(titreListe.toLowerCase()))
+                    return titreListe;
+
+            }
+            return null;
+        }
 
         /**
          * Méthode permettant de notifier à l'utilisateur que le titre n'est pas trouvé

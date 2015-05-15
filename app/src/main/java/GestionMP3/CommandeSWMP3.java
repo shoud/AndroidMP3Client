@@ -1,11 +1,16 @@
 package GestionMP3;
 
 import org.ksoap2.SoapEnvelope;
+import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 import java.net.Proxy;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+
 /**
  *
  */
@@ -17,6 +22,30 @@ public class CommandeSWMP3
         String method = "getAction";
         SoapObject request = new SoapObject(namespace, method);
         request.addProperty("phrase", phrase);
+        SoapSerializationEnvelope envelope = getEnvelope(request);
+
+        String soapAction = "\"" + namespace + method + "\"";
+        HttpTransportSE ht = getHttp();
+        try
+        {
+            ht.call(soapAction, envelope);
+            SoapPrimitive resultString = (SoapPrimitive)envelope.getResponse();
+            return resultString.toString();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getTitre(String phrase)
+    {
+        String namespace = "http://webservice/";
+        String method = "getTitre";
+        SoapObject request = new SoapObject(namespace, method);
+        request.addProperty("phrase", phrase);
+
         SoapSerializationEnvelope envelope = getEnvelope(request);
 
         String soapAction = "\"" + namespace + method + "\"";
