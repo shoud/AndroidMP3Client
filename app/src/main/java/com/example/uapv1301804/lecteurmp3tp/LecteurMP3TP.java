@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -73,7 +74,10 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gestionMP3 = new GestionMP3();
-       setContentView(R.layout.activity_lecteur_mp3_tp);
+        setContentView(R.layout.activity_lecteur_mp3_tp);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         init();
         ImageButton ajouter = (ImageButton) findViewById(R.id.btAjouter);

@@ -10,8 +10,12 @@ import android.speech.SpeechRecognizer;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.SOAP.CMICommandeMP3WSPortBinding;
 import com.example.uapv1301804.lecteurmp3tp.LecteurMP3TP;
 import com.example.uapv1301804.lecteurmp3tp.R;
 
@@ -160,18 +164,54 @@ public class CommandeVocal
         public void onResults(Bundle results) {
             List<String> tmp = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
             //Log.v("BuiltinText", tmp.get(0));
-            System.out.println("Avant le try");
             try
             {
+                String commande = CommandeSWMP3.getAction(tmp.get(0));
+                if(commande.equals("jouer"))
+                {
+                    /*titre = getTitre(tmp.get(0));
+                        if (titre != null) {
+                            try {
+                                gestionMP3.jouer(titre);
+                                controlButton.setText("Stop");
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } else
+                            errTitre();*/
+                }
+                else
+                {
+                    if(commande.equals("supprimer"))
+                    {
+                        /*titre = getTitre(tmp.get(0));
+                        if (titre != null) {
+                            gestionMP3.supprimer(titre);
+                            lecteurMP3TP.rafraichir();
+                        }*/
+                    }
+                    else
+                    {
+                        if(commande.equals("rechercher"))
+                        {
 
-                //service.MethodToInvoke(...);
-                //System.out.println(">>>>>>>>>>La commande voulue : " + service.getAction(tmp.get(0)));
-                //System.out.println(">>>>>>>>>>>>>>>Le titre voulu" + service.getTitre(tmp.get(0)));
-
+                        }
+                        else
+                        {
+                            if(commande.equals("ajouter"))
+                            {
+                                lecteurMP3TP.dialogAjouter();
+                            }
+                            else
+                            {
+                                errCommande(tmp.get(0));
+                            }
+                        }
+                    }
+                }
             } catch (Exception e) {
                 System.out.println(e.toString());
             }
-            System.out.println("apres le try");
             stopperEnregistrement();
         }
 
