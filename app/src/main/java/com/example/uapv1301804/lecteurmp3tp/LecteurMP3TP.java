@@ -30,6 +30,7 @@ import GestionMP3.FichierMP3;
 import GestionMP3.EnvoyerMusique;
 import GestionMP3.MyProgressDialog;
 import GestionMP3.CommandeVocal;
+import Ice.InitializationData;
 
 /**
  * Activité principale de l'application, elle permet :
@@ -54,6 +55,8 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
     private ArrayAdapter<String> adapter;
     //Le context
     private Context context;
+    //Pour communiquer avec ICEStorm
+    private Ice.Communicator communicator = null;
     //La boite de dialogue pour ajouter un mp3
     private final static int ID_AJOUTER_MP3_DIALOG = 0;
     //Commande vocale
@@ -73,7 +76,8 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        gestionMP3 = new GestionMP3();
+        iceStorm();
+        gestionMP3 = new GestionMP3(communicator);
         setContentView(R.layout.activity_lecteur_mp3_tp);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -93,6 +97,21 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
         //Commandes vocales
         commandeVocal = new CommandeVocal(this,gestionMP3);
     }
+
+    private void iceStorm() {
+        try {
+            InitializationData initData = new InitializationData();
+            initData.properties = Ice.Util.createProperties();
+            initData.properties.setProperty("Ice.Default.Router", "Glacier2/router:tcp -h shoud.ovh -p 5036");
+            initData.properties.setProperty("Ice.ACM.Client", "0");
+            initData.properties.setProperty("Ice.RetryIntervals", "-1");
+            initData.properties.setProperty("CallbackAdapter.Router", "Glacier2/router:tcp -h shoud.ovh -p 5036");
+            communicator = Ice.Util.initialize(initData);
+        } catch (Exception e) {
+            Log.e("IceStorm erreur = ", e.toString());
+        }
+    }
+
 
     /**
      * Fenetre permettant de rajouter une musique
