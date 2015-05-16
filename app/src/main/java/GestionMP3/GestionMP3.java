@@ -3,10 +3,18 @@ package GestionMP3;
 import android.media.MediaPlayer;
 import android.media.AudioManager;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.example.uapv1301804.lecteurmp3tp.LecteurMP3TP;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.*;
+
+import Ice.Current;
+import Ice.Identity;
+import Serveur.Moniteur;
+import Serveur._MoniteurDisp;
 
 /**
  * Classe permettant de gérer les mp3
@@ -29,6 +37,9 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
     private Ice.Communicator communicator = null;
     private boolean connecte = false;
     private Glacier2.RouterPrx routerPrx = null;
+    private Ice.ObjectPrx moniteurPrx = null;
+    private IceStorm.TopicPrx topicPrx = null;
+    private LecteurMP3TP lecteurMP3TP = null;
 
     public Serveur.mp3Prx getMp3()
     {
@@ -39,14 +50,16 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
      * Constructeur de la classe GestionMP3
      * Il permet de créer la connexion avec le serveur.
      */
-    public GestionMP3(Ice.Communicator communicator)
+    public GestionMP3(Ice.Communicator communicator, LecteurMP3TP lecteurMP3TP)
     {
         this.communicator = communicator;
+        this.lecteurMP3TP = lecteurMP3TP;
         initRouteur();
         ic = Ice.Util.initialize();
         base = ic.stringToProxy("SimpleServeurMP3:default -h shoud.ovh -p 10000");
         mp3 = Serveur.mp3PrxHelper.checkedCast(base);
         mp = new MediaPlayer();
+        initStorm();
     }
 
     private void initRouteur() {
@@ -61,6 +74,33 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
             }
         } catch (Exception e) {
             Log.e("Erreur Glacier = ", e.toString());
+        }
+    }
+
+    private void initStorm() {
+        if (!connecte)
+            return;
+        try {
+            Ice.ObjectPrx obj = communicator.stringToProxy("IceStorm/TopicManager:tcp -h shoud.ovh -p 5038");
+            IceStorm.TopicManagerPrx topicManager = IceStorm.TopicManagerPrxHelper.checkedCast(obj);
+            Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithRouter("MonitorAdapter", routerPrx);
+            Moniteur monitor = new MoniteurI();
+            moniteurPrx = adapter.add(monitor, new Identity("default", routerPrx.getCategoryForClient())).ice_twoway();
+            adapter.activate();
+            try {
+                topicPrx = topicManager.retrieve("StreamPlayerNotifs");
+                try {
+                    //Map<String, String> qos = new HashMap<>();
+                    //qos.put("reliability", "ordered");
+                    //topicPrx.subscribeAndGetPublisher(qos, monitorProxy);
+                } catch (Exception e) {
+                    Log.e("IceStormSubscribe", e.toString());
+                }
+            } catch (Exception e) {
+                Log.e("IceStormTopic", e.toString());
+            }
+        } catch (Exception e) {
+            Log.e("IceStorm", e.toString());
         }
     }
 
@@ -123,7 +163,9 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
      */
     public boolean supprimer()
     {
-        return mp3.supprimerMP3(this.titre);
+        if(titre != null)
+            return mp3.supprimerMP3(this.titre);
+        return false;
     }
 
     public boolean supprimer(String titre)
@@ -173,6 +215,29 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
                 System.err.println(e.getMessage());
                 return;
             }
+        }
+    }
+    private class MoniteurI extends _MoniteurDisp {
+        @Override
+        public void rapport(String action, String titre, Current __current) {
+            //if (!action.equals(lastAction) || s != selectedSong)
+            //{
+                final String message;
+                if (action.equals("ajouter"))
+                    message = "Le mp3 " + titre + " a été rajouté";
+                else if (action.equals("supprimer"))
+                    message = "Le mp3 " + titre + " a été supprimé";
+                else
+                    message = "L'action faite n'existe pas Oo";
+
+                lecteurMP3TP.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(lecteurMP3TP.getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            //}
+            //lastAction = "";
         }
     }
 }

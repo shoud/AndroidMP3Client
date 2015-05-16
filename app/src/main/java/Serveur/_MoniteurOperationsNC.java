@@ -20,6 +20,7 @@
 
 package Serveur;
 
-public abstract class Callback_mp3_ajouterMP3 extends Ice.OnewayCallback
+public interface _MoniteurOperationsNC
 {
+    void rapport(String action, String titre);
 }

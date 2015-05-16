@@ -77,7 +77,7 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         iceStorm();
-        gestionMP3 = new GestionMP3(communicator);
+        gestionMP3 = new GestionMP3(communicator,this);
         setContentView(R.layout.activity_lecteur_mp3_tp);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
