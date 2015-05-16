@@ -80,6 +80,7 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
     private void initStorm() {
         if (!connecte)
             return;
+
         try {
             Ice.ObjectPrx obj = communicator.stringToProxy("IceStorm/TopicManager:tcp -h shoud.ovh -p 5038");
             IceStorm.TopicManagerPrx topicManager = IceStorm.TopicManagerPrxHelper.checkedCast(obj);
@@ -90,9 +91,9 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
             try {
                 topicPrx = topicManager.retrieve("StreamPlayerNotifs");
                 try {
-                    //Map<String, String> qos = new HashMap<>();
-                    //qos.put("reliability", "ordered");
-                    //topicPrx.subscribeAndGetPublisher(qos, monitorProxy);
+                    Map<String, String> qos = new HashMap<>();
+                    qos.put("reliability", "ordered");
+                    topicPrx.subscribeAndGetPublisher(qos, moniteurPrx);
                 } catch (Exception e) {
                     Log.e("IceStormSubscribe", e.toString());
                 }
@@ -220,8 +221,7 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
     private class MoniteurI extends _MoniteurDisp {
         @Override
         public void rapport(String action, String titre, Current __current) {
-            //if (!action.equals(lastAction) || s != selectedSong)
-            //{
+
                 final String message;
                 if (action.equals("ajouter"))
                     message = "Le mp3 " + titre + " a été rajouté";
@@ -236,8 +236,6 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
                         Toast.makeText(lecteurMP3TP.getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                     }
                 });
-            //}
-            //lastAction = "";
         }
     }
 }
