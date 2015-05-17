@@ -352,8 +352,6 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
             {
                 //On affiche à l'utilisateur le titre qui vient d'être ajouté
                 message = "Le mp3 " + titre + " a été rajouté";
-                //On rafraichie la liste
-                lecteurMP3TP.rafraichir();
             }
 
             //Si l'action est supprimer
