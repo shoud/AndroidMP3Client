@@ -21,14 +21,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import GestionMP3.GestionMP3;
-import GestionMP3.FichierMP3;
 import GestionMP3.EnvoyerMusique;
 import GestionMP3.CommandeVocal;
+import GestionMP3.ProgressDialogPerso;
+
 import Ice.InitializationData;
 
 /**
@@ -60,13 +62,14 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
     private final static int ID_AJOUTER_MP3_DIALOG = 0;
     //Commande vocale
     private CommandeVocal commandeVocal;
-
+    //titre de la musique
     private String titre;
+    //l'artiste de la musique
     private String artiste;
+    //l'album de la musique
     private String album;
+    //le compositeur de la musique
     private String compo;
-
-
 
     /**
      * Méthode permettant la création d'une activité
@@ -75,16 +78,20 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //initialisation de ICEStorm
         iceStorm();
+        //Création du gestionnaire de mp3
         gestionMP3 = new GestionMP3(communicator,this);
+        //Layoute de l'activité
         setContentView(R.layout.activity_lecteur_mp3_tp);
-
+        //Pour pouvoir utiliser le service web
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-
+        //Permet de récupérer la liste de musique
         init();
+        //Récupération du bouton ajouter
         ImageButton ajouter = (ImageButton) findViewById(R.id.btAjouter);
-        // add button listener
+        //Ajoute le bouton ajouter au listener pour qu'il lance une boite de dialogue
         ajouter.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -93,7 +100,25 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
                 dialogAjouter();
             }
         });
-        //Commandes vocales
+        //récupération du bouton supprimer
+        ImageButton supprimer = (ImageButton) findViewById(R.id.btSupprimer);
+        //Ajout du bouton supprimer dans le listener pour qu'il lance une boite de dialogue
+        supprimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dialogSupprimer();
+            }
+        });
+        //Récupération du bouton information
+        ImageButton information = (ImageButton) findViewById(R.id.btInformation);
+        //Ajout du bouton supprimer dans le listener pour qu'il lance une boite de dialogue
+        information.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dialogInformation();
+            }
+        });
+        //Initialisation des commandes vocales
         commandeVocal = new CommandeVocal(this,gestionMP3);
     }
 
@@ -146,6 +171,109 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
         alertDialog.show();
     }
 
+    /**
+     * Fenetre permettant de supprimer une musique
+     */
+    public void dialogSupprimer()
+    {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View alertDialogView = inflater.inflate(R.layout.supprimer_mp3_dialog, null);
+        alertDialogBuilder.setTitle("Supprimer MP3");
+        alertDialogBuilder.setCancelable(false);
+        alertDialogBuilder.setView(alertDialogView);
+        final AutoCompleteTextView rechercheSupprimer = (AutoCompleteTextView) alertDialogView.findViewById(R.id.rechercheSupprimer);
+        rechercheSupprimer.setThreshold(2);
+        //On met la liste de musique
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, listMusique);
+        //On le rajoute à l'adaptateur
+        rechercheSupprimer.setAdapter(adapter);
+        //Permet de détecter quand on appui sur une touche quand on fait une recherche
+        //pour rafraichir la recherche un live
+        rechercheSupprimer.setOnKeyListener(this);
+        alertDialogBuilder.setPositiveButton("Supprimer", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                //On récupère le titre de la musique a supprimer
+                String titre = rechercheSupprimer.getText().toString();
+                if(gestionMP3.rechercher(titre))
+                {
+                    gestionMP3.supprimer(titre);
+                    rafraichir();
+                }
+
+            }
+        });
+        //Création de la boite de dialogue
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        //Afficher la boite de dialogue
+        alertDialog.show();
+    }
+
+    /**
+     * Fenetre permettant de voir des information sur une musique
+     */
+    public void dialogInformation()
+    {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View alertDialogView = inflater.inflate(R.layout.rechercher_mp3_dialog, null);
+        alertDialogBuilder.setTitle("Rechercher MP3");
+        alertDialogBuilder.setCancelable(false);
+        alertDialogBuilder.setView(alertDialogView);
+        final AutoCompleteTextView rechercheInformation = (AutoCompleteTextView) alertDialogView.findViewById(R.id.rechercheInfo);
+        rechercheInformation.setThreshold(2);
+        //On met la liste de musique
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, listMusique);
+        //On le rajoute à l'adaptateur
+        rechercheInformation.setAdapter(adapter);
+        //Permet de détecter quand on appui sur une touche quand on fait une recherche
+        //pour rafraichir la recherche un live
+        rechercheInformation.setOnKeyListener(this);
+
+        alertDialogBuilder.setPositiveButton("Rechercher information", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final View alertDialogView = inflater.inflate(R.layout.information_mp3_dialog, null);
+                alertDialogBuilder.setTitle("Information MP3");
+                alertDialogBuilder.setCancelable(false);
+                alertDialogBuilder.setView(alertDialogView);
+
+                final String titre = rechercheInformation.getText().toString();
+                TextView tvtitre = (TextView) alertDialogView.findViewById(R.id.tvTitre);
+                TextView tvchanteur = (TextView) alertDialogView.findViewById(R.id.tvArtiste);
+                TextView tvalbum = (TextView) alertDialogView.findViewById(R.id.tvAlbum);
+                TextView tvcompo = (TextView) alertDialogView.findViewById(R.id.tvCompositeur);
+
+                tvtitre.setText("Titre : " + titre);
+                tvalbum.setText("Album : " + gestionMP3.getMp3().getAlbum(titre));
+                tvchanteur.setText("Artiste : " + gestionMP3.getMp3().getArtiste(titre));
+                tvcompo.setText("Compositeur : " + gestionMP3.getMp3().getCompo(titre));
+
+                alertDialogBuilder.setPositiveButton("Jouer", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        try {
+                            gestionMP3.jouer(titre);
+                            Button controlButton = (Button) findViewById(R.id.playStop);
+                            controlButton.setText("Stop");
+                        } catch (Exception e) {
+
+                        }
+                    }
+                });
+                alertDialogBuilder.setNegativeButton("Quitter", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // User cancelled the dialog
+                            }
+                        });
+                  }
+        });
+        //Création de la boite de dialogue
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        //Afficher la boite de dialogue
+        alertDialog.show();
+    }
+
     public void init()
     {
         //Récupération de la listeview de musique
@@ -177,7 +305,6 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
 
         AutoCompleteTextView recherche = (AutoCompleteTextView) findViewById(R.id.tvRecherche);
         recherche.setThreshold(2);
-
         //On met la liste de musique
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, listMusique);
         //On le rajoute à l'adaptateur
@@ -254,27 +381,6 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
     }
 
     /**
-     * Gestion du bouton permettant d'afficher les informations
-     * de la musique en cour de lecture
-     * @param controlView
-     */
-    public void btInformation(View controlView)
-    {
-        //Récupération du bouton
-        final Button loginButton = (Button) findViewById(R.id.btInfo);
-        //Lancement d'une nouvelle activité permettant d'afficher les informations
-        loginButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LecteurMP3TP.this, ActivityMusique.class);
-                intent.putExtra("FichierMP3", new FichierMP3(gestionMP3.getTitre(), gestionMP3.getArtiste(), gestionMP3.getAlbum(), gestionMP3.getCompo()));
-                startActivity(intent);
-            }
-        });
-    }
-
-    /**
      * Méthode permettant de chercher un mp3 à envoyer
      */
     public void ChoisirEnvoyer()
@@ -303,7 +409,7 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
             if (requestCode == 0)
             {
                 String chemin = data.getData().getPath();
-                EnvoyerMusique envoyerMusique = new EnvoyerMusique(chemin, titre, artiste, album, compo, new GestionMP3.ProgressDialogPerso(this), gestionMP3);
+                EnvoyerMusique envoyerMusique = new EnvoyerMusique(chemin, titre, artiste, album, compo, new ProgressDialogPerso(this), gestionMP3);
                 envoyerMusique.execute();
                 titre = "";
                 artiste = "";
@@ -311,16 +417,6 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
                 compo= "";
             }
         }
-    }
-
-    /**
-     * Permet de supprimer une musique
-     * @param controlView
-     */
-    public void btSupprimer(View controlView)
-    {
-        if(gestionMP3.supprimer())
-            rafraichir();
     }
 
     public void btMicro(View controlView)

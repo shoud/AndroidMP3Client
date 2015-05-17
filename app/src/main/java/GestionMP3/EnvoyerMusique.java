@@ -26,7 +26,7 @@ public class EnvoyerMusique extends AsyncTask<Void, Integer, Void>
     private String compo = null;
     //La boite de dialogue pour montrer l'envoi du MP3
     private ProgressDialogPerso dialog = null;
-    //Récupération de l'objet permettant de lancer des requets sur le serveur
+    //Récupération de l'objet permettant de lancer des requettes sur le serveur
     private Serveur.mp3Prx mp3 = null;
     //Initialisation de la taille à 0.
     private int size = 0;
@@ -42,28 +42,39 @@ public class EnvoyerMusique extends AsyncTask<Void, Integer, Void>
      * @param gestionMP3 L'objet permettant de gérer les mp3
      */
     public EnvoyerMusique(String chemin, String titre, String artiste, String album, String compo, ProgressDialogPerso dialog, GestionMP3 gestionMP3) {
+        //le chemin du mp3 sur le téléphone
         this.chemin = chemin;
+        //le titre de la musique
         this.titre = titre;
+        //Le nom de l'artiste de la musique
         this.artiste = artiste;
+        //Le nom de l'album de la musique
         this.album = album;
+        //Le nom du compositeur
         this.compo = compo;
+        //La boite de dialogue pour afficher l'envoi
         this.dialog = dialog;
+        //Permet de gérer les mp3 sur le téléphone
         this.gestionMP3 = gestionMP3;
+        //Permet de gérer les mp3 sur le serveur
         this.mp3 = gestionMP3.getMp3();
     }
 
     /**
      * Méthode permettant d'envoyer un fichier
      * @param params
-     * @return rien
      */
     @Override
     protected Void doInBackground(Void... params) {
-        try {
+        try
+        {
             int offset = 0;
+            //Pour définir le fichier à envoyer
             File file = new File(chemin);
+            //Ouverture du stream pour envoyer le fichier
             BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));
             int max = 512 * 1024;
+            //La taille du fichier en bit
             size = (int) file.length();
             byte[] bytes = new byte[size];
             int i = in.read(bytes);
@@ -72,22 +83,26 @@ public class EnvoyerMusique extends AsyncTask<Void, Integer, Void>
             dialog.set(size, titre);
             dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             dialog.setProgressNumberFormat("%1d/%2dKB");
-            while (offset < size) {
+            while (offset < size)
+            {
                 int end = offset + max;
                 if (end > size)
                     end = size;
                 byte[] temp = Arrays.copyOfRange(bytes, offset, end);
-                try {
-                    publishProgress(offset);;
+                try
+                {
+                    publishProgress(offset);
                     mp3.envoyerMusique(titre, artiste, album, compo, temp);
-                } catch (Exception e) {
-                    Log.e("upload", e.toString());
+                } catch (Exception e)
+                {
+                    Log.e("Erreur envoi", e.toString());
                 }
                 offset += end;
             }
             dialog.dismiss();
-        } catch (Exception e) {
-            Log.e("upload", e.toString());
+        } catch (Exception e)
+        {
+            Log.e("Erreur envoi", e.toString());
         }
         return null;
     }

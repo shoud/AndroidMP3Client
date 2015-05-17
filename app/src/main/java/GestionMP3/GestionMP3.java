@@ -223,13 +223,13 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
 
     /**
      * Permet de rechercher un MP3
-     * @param nom Le MP3 à rechercher
+     * @param titre Le MP3 à rechercher
      * @return true Si le MP3 existe
      * @return false Si le MP3 existe pas
      */
-    public boolean rechercher(String nom)
+    public boolean rechercher(String titre)
     {
-        return mp3.rechercherMP3("Poutou");
+        return mp3.rechercherMP3(titre);
     }
 
     /**
@@ -349,8 +349,13 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
             final String message;
             //Si l'action reçu est ajouter
             if (action.equals("ajouter"))
+            {
                 //On affiche à l'utilisateur le titre qui vient d'être ajouté
                 message = "Le mp3 " + titre + " a été rajouté";
+                //On rafraichie la liste
+                lecteurMP3TP.rafraichir();
+            }
+
             //Si l'action est supprimer
             else if (action.equals("supprimer"))
                 //On affiche à l'utilisateur le titre qui vient d'être supprimé

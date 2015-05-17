@@ -9,15 +9,12 @@ import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.ImageButton;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import com.example.uapv1301804.lecteurmp3tp.LecteurMP3TP;
 import com.example.uapv1301804.lecteurmp3tp.R;
-
-import org.json.JSONException;
 
 
 /**
@@ -27,18 +24,15 @@ import org.json.JSONException;
 public class CommandeVocal
 {
 
+    //L'activité principale de l'application
     private final LecteurMP3TP lecteurMP3TP;
+    //Le gestionnaire de mp3
     private final GestionMP3 gestionMP3;
-    private final ImageButton mic;
+    //L'objet permettant d'utiliser l'api google speech
     private SpeechRecognizer asr = null;
+    //Pour utiliser l'api goole
     private Intent intent = null;
 
-    //Pour traduire une commande
-    private enum commande {jouer,supprimer,rechercher,ajouter,erreur; }
-    private ArrayList<String> listJouer = new ArrayList<String>();
-    private ArrayList<String> listSupprimer = new ArrayList<String>();
-    private ArrayList<String> listRechercher = new ArrayList<String>();
-    private ArrayList<String> listAjouter = new ArrayList<String>();
     Button controlButton;
 
     /**
@@ -50,15 +44,13 @@ public class CommandeVocal
         this.lecteurMP3TP = lecteurMP3TP;
         //Permet de lancer les méthodes
         this.gestionMP3 = gestionMP3;
-        //Initialisation des commandes
-        initCommande();
-        //Récupération du bouton d'enregistrement
-        mic = (ImageButton) lecteurMP3TP.findViewById(R.id.micro);
+        //Le bouton jouer/pause
         controlButton = (Button)lecteurMP3TP.findViewById(R.id.playStop);
         //Création de l'objet pour gérer le micro
         asr = SpeechRecognizer.createSpeechRecognizer(lecteurMP3TP);
         //Permet de traiter la résultat
-        asr.setRecognitionListener(new ResultProcessor());
+        asr.setRecognitionListener(new ResultaSpeech());
+        //Pour dire qu'on veut reconnaitre la parole
         intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
     }
 
@@ -78,30 +70,11 @@ public class CommandeVocal
         asr.stopListening();
     }
 
-    public void initCommande()
-    {
-        //Pour jouer
-        listJouer.add("jouer");
-        listJouer.add("joue");
-        listJouer.add("lance");
-        listJouer.add("lire");
-
-        //Pour supprimer
-        listSupprimer.add("supprime");
-        listSupprimer.add("supprimer");
-        listSupprimer.add("enleve");
-
-        //Pour rechercher
-        listRechercher.add("recherche");
-        listRechercher.add("rechercher");
-
-        //Pour ajouter
-        listAjouter.add("ajoute");
-        listAjouter.add("ajouter");
-        listAjouter.add("rajoute");
-    }
-
-    private class ResultProcessor implements RecognitionListener
+    /**
+     * Classe ResultaSpeech, elle permet de gérer les action une fois
+     * qu'on a reçu la chaine de caractère par l'api google
+     */
+    private class ResultaSpeech implements RecognitionListener
     {
 
         @Override
@@ -120,93 +93,127 @@ public class CommandeVocal
         public void onEndOfSpeech(){}
 
         @Override
-        public void onError(int error)
+        /**
+         * Méthode peremettant de signigier une érreure dans les logs
+         * si il y a eu un problème avec google speech
+         */
+        public void onError(int erreur)
         {
+            //Le message a ecrire dans le log
             String message;
-            switch (error)
+            switch (erreur)
             {
                 case SpeechRecognizer.ERROR_AUDIO:
-                    message = "Audio recording error.";
+                    message = "Audio enregistrement erreur.";
                     break;
                 case SpeechRecognizer.ERROR_CLIENT:
-                    message = "Other client side errors.";
+                    message = "Erreur client.";
                     break;
                 case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
-                    message = "Insufficient permissions";
+                    message = "Permissions insuffisantes";
                     break;
                 case SpeechRecognizer.ERROR_NETWORK:
-                    message = "Other network related errors.";
+                    message = "Erreur de réseau.";
                     break;
                 case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
-                    message = "Network operation timed out.";
+                    message = "Temps réseau dépassé.";
                     break;
                 case SpeechRecognizer.ERROR_NO_MATCH:
-                    message = "No recognition result matched.";
+                    message = "Pas de résulta.";
                     break;
                 case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
-                    message = "RecognitionService busy.";
+                    message = "Le service est surchargé.";
                     break;
                 case SpeechRecognizer.ERROR_SERVER:
-                    message = "Server sends error status.";
+                    message = "Erreur du serveur";
                     break;
                 case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
-                    message = "No speech input";
+                    message = "Pas de son enregistré";
                     break;
                 default:
-                    message = "Error";
+                    message = "Erreur inconnu";
             }
             Log.e("SpeechRecognizer", message);
         }
 
         @Override
+        /**
+         * La méthode qui reçoit le résulat de speech
+         */
         public void onResults(Bundle results) {
+            //la liste des résulats possible, en 0 le plus possible vers le moins possible
             List<String> tmp = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+            //On garde la possibilité la plus sûr
+            String phrase = tmp.get(0);
+            //Le titre de la musique récupéré dans la commande vocale
             String titre;
-            //Log.v("BuiltinText", tmp.get(0));
             try
             {
-                String commande = CommandeSWMP3.getAction(tmp.get(0));
-                if(commande.equals("jouer"))
+                //Récupération de l'action à executer sur le service web
+                String action = CommandeSWMP3.getAction(phrase);
+                //Si l'action est jouer
+                if(action.equals("jouer"))
                 {
-                    titre = CommandeSWMP3.getTitre(tmp.get(0));
-                    System.out.println("Le titre est >>>>>>> : " + titre);
-                        if (titre != null) {
-                            try {
+                    //on récupére le titre de la musique à jouer
+                    titre = CommandeSWMP3.getTitre(phrase);
+                    //Si le titre de la musique est différent de null
+                    if (titre != null)
+                    {
+                            try
+                            {
+                                //On met à jour le titre avec celui dans le téléphone
                                 titre = titrePresent(titre);
+                                //On jout le titre sur le téléphone
                                 gestionMP3.jouer(titre);
+                                //On met le bouton sur stop, pour pouvoir stopper la musique
                                 controlButton.setText("Stop");
-                            } catch (IOException e) {
+                            } catch (IOException e)
+                            {
+                                //Si il y a une erreur
                                 e.printStackTrace();
                             }
-                        } else
-                            errTitre();
+                    }
+                    else
+                        //On affiche une fenêtre pour dire que le titre est inconnu
+                        errTitre();
                 }
                 else
                 {
-                    if(commande.equals("supprimer"))
+                    //Si l'action est supprimer
+                    if(action.equals("supprimer"))
                     {
-                        titre = CommandeSWMP3.getTitre(tmp.get(0));
-                        if (titre != null) {
+                        //On récupère le titre grâce au service web
+                        titre = CommandeSWMP3.getTitre(phrase);
+                        //Si le titre est différent de null
+                        if(titre != null)
+                        {
+                            //On met à jour le titre avec celui sur le téléphone
                             titre = titrePresent(titre);
+                            //On supprime la musique
                             gestionMP3.supprimer(titre);
+                            //On rafraichie la liste de musique
                             lecteurMP3TP.rafraichir();
                         }
                     }
                     else
                     {
-                        if(commande.equals("rechercher"))
+                        //Si l'action est rechercher
+                        if(action.equals("rechercher"))
                         {
 
                         }
                         else
                         {
-                            if(commande.equals("ajouter"))
+                            //Si l'action est ajouter
+                            if(action.equals("ajouter"))
                             {
+                                //Ouverture de la fenetre pour rajouter une musique
                                 lecteurMP3TP.dialogAjouter();
                             }
                             else
                             {
-                                errCommande(tmp.get(0));
+                                //Si aucune action est trouvé, on affiche la phrase entendu
+                                errCommande(phrase);
                             }
                         }
                     }
@@ -214,18 +221,27 @@ public class CommandeVocal
             } catch (Exception e) {
                 System.out.println(e.toString());
             }
-            stopperEnregistrement();
         }
 
+        /**
+         * Méthode permettant de savoir si le titre est présent dans le téléphone
+         * @param titre le titre de la musique à chercher
+         * @return la version du titre présent dans le téléphone
+         */
         public String titrePresent(String titre)
         {
+            //La liste de musique présente sur le téléphone
             ArrayList<String> listMusique = new ArrayList<String>(lecteurMP3TP.getListMusique());
+            //On test sur tout les titre présent
             for(String titreListe : listMusique)
             {
+                //Si le titre existe
                 if(titre.toLowerCase().contains(titreListe.toLowerCase()))
+                    //On retourne le titre présent sur le téléphone
                     return titreListe;
 
             }
+            //Sinon on retourne null
             return null;
         }
 
@@ -234,20 +250,25 @@ public class CommandeVocal
          */
         public void errTitre()
         {
+            //Création d'un constructeur de dialogue
             AlertDialog.Builder builder = new AlertDialog.Builder(lecteurMP3TP);
+            //Afficher que le titre n'a pas pu être trouvé
             builder.setMessage("Titre non trouvé")
+                    //Pour redire la commande
                     .setPositiveButton("Redire commande", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            //Lance l'enregistrement d'une phrase
                             enregistrement();
                         }
                     })
+                    //Si l'utilisateur veut annuler
                     .setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            // User cancelled the dialog
                         }
                     });
-            // Create the AlertDialog object and return it
+            //Création de la boite de dialogue
             builder.create();
+            //Affichage de la boite de dialogue
             builder.show();
         }
 

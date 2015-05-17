@@ -11,10 +11,10 @@
         android:text="Play"
         android:id="@+id/playStop"
         android:onClick="btPlayStop"
-        android:layout_alignParentBottom="true"
         android:background="#ffd9fffa"
-        android:layout_toRightOf="@+id/btInfo"
-        android:layout_toEndOf="@+id/btInfo" />
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/btAjouter"
+        android:layout_toStartOf="@+id/btAjouter" />
 
     <ListView
         android:layout_width="match_parent"
@@ -37,43 +37,22 @@
         android:textColor="#ff0604ff"
         android:background="#ff418cff" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Information"
-        android:id="@+id/btInfo"
-        android:onClick="btInformation"
-        android:layout_below="@+id/lvMusique"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="#fffaffbe" />
-
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btAjouter"
         android:onClick="btAjouter"
+        android:src="@android:drawable/ic_input_add"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/playStop"
-        android:src="@android:drawable/ic_input_add" />
+        android:layout_alignLeft="@+id/editText"
+        android:layout_alignStart="@+id/editText" />
 
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageBtSupprimer"
-        android:onClick="btSupprimer"
-        android:layout_below="@+id/lvMusique"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/lvMusique"
-        android:layout_alignEnd="@+id/lvMusique"
-        android:src="@android:drawable/ic_delete" />
 
     <AutoCompleteTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvRecherche"
-        android:text="Recherche"
+        android:hint="Rechercher"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -85,12 +64,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/micro"
         android:onClick="btMicro"
-        android:layout_alignBottom="@+id/playStop"
-        android:layout_toLeftOf="@+id/imageBtSupprimer"
-        android:layout_toRightOf="@+id/btAjouter"
-        android:layout_toEndOf="@+id/btAjouter"
-        android:layout_alignTop="@+id/imageBtSupprimer"
-        android:src="@android:drawable/ic_btn_speak_now" />
+        android:src="@android:drawable/ic_btn_speak_now"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/editText"
+        android:layout_toEndOf="@+id/editText"
+        android:layout_marginLeft="54dp"
+        android:layout_marginStart="54dp" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -103,5 +82,27 @@
         android:layout_alignRight="@+id/lvMusique"
         android:layout_alignEnd="@+id/lvMusique"
         android:src="@android:drawable/ic_menu_rotate" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btSupprimer"
+        android:layout_alignTop="@+id/micro"
+        android:layout_alignRight="@+id/btRafraichir"
+        android:layout_alignEnd="@+id/btRafraichir"
+        android:layout_alignParentBottom="true"
+        android:src="@android:drawable/ic_delete" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btInformation"
+        android:layout_alignBottom="@+id/playStop"
+        android:layout_alignTop="@+id/playStop"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/playStop"
+        android:layout_toStartOf="@+id/playStop"
+        android:src="@android:drawable/ic_dialog_info" />
 
 </RelativeLayout>
