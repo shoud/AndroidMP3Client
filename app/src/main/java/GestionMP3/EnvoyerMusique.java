@@ -1,7 +1,6 @@
 package GestionMP3;
 
 import android.app.ProgressDialog;
-import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -26,7 +25,7 @@ public class EnvoyerMusique extends AsyncTask<Void, Integer, Void>
     //Compositeur
     private String compo = null;
     //La boite de dialogue pour montrer l'envoi du MP3
-    private MyProgressDialog dialog = null;
+    private ProgressDialogPerso dialog = null;
     //Récupération de l'objet permettant de lancer des requets sur le serveur
     private Serveur.mp3Prx mp3 = null;
     //Initialisation de la taille à 0.
@@ -42,7 +41,7 @@ public class EnvoyerMusique extends AsyncTask<Void, Integer, Void>
      * @param dialog La boite de dialogue à utiliser lors de l'envoi
      * @param gestionMP3 L'objet permettant de gérer les mp3
      */
-    public EnvoyerMusique(String chemin, String titre, String artiste, String album, String compo, MyProgressDialog dialog, GestionMP3 gestionMP3) {
+    public EnvoyerMusique(String chemin, String titre, String artiste, String album, String compo, ProgressDialogPerso dialog, GestionMP3 gestionMP3) {
         this.chemin = chemin;
         this.titre = titre;
         this.artiste = artiste;

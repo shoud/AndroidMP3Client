@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import GestionMP3.GestionMP3;
 import GestionMP3.FichierMP3;
 import GestionMP3.EnvoyerMusique;
-import GestionMP3.MyProgressDialog;
 import GestionMP3.CommandeVocal;
 import Ice.InitializationData;
 
@@ -304,7 +303,7 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
             if (requestCode == 0)
             {
                 String chemin = data.getData().getPath();
-                EnvoyerMusique envoyerMusique = new EnvoyerMusique(chemin, titre, artiste, album, compo, new MyProgressDialog(this), gestionMP3);
+                EnvoyerMusique envoyerMusique = new EnvoyerMusique(chemin, titre, artiste, album, compo, new GestionMP3.ProgressDialogPerso(this), gestionMP3);
                 envoyerMusique.execute();
                 titre = "";
                 artiste = "";
