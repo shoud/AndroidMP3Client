@@ -70,6 +70,8 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
     private String album;
     //le compositeur de la musique
     private String compo;
+    //L'adresse du serveur
+    private String serveurAdresse = null;
 
     /**
      * Méthode permettant la création d'une activité
@@ -78,17 +80,11 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //initialisation de ICEStorm
-        iceStorm();
-        //Création du gestionnaire de mp3
-        gestionMP3 = new GestionMP3(communicator,this);
         //Layoute de l'activité
         setContentView(R.layout.activity_lecteur_mp3_tp);
         //Pour pouvoir utiliser le service web
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        //Permet de récupérer la liste de musique
-        init();
         //Récupération du bouton ajouter
         ImageButton ajouter = (ImageButton) findViewById(R.id.btAjouter);
         //Ajoute le bouton ajouter au listener pour qu'il lance une boite de dialogue
@@ -118,8 +114,32 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
                 dialogInformation();
             }
         });
-        //Initialisation des commandes vocales
-        commandeVocal = new CommandeVocal(this,gestionMP3);
+
+        //Création d'un créateur de dialogue
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //On lui dit qu'il doit utiliser le xml connexion_mp3_dialog
+        final View alertDialogView = inflater.inflate(R.layout.connexion_mp3_dialog, null);
+        //Le titre de la fenêtre sera ajouter mp3
+        alertDialogBuilder.setTitle("IP Serveur");
+        //On peut sortir de la fenêtre
+        alertDialogBuilder.setCancelable(false);
+        //On rajoute la vue au dialogue
+        alertDialogBuilder.setView(alertDialogView);
+        //Le bouton positife s'appellra Connexion
+        alertDialogBuilder.setPositiveButton("Connexion", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                //Récupération EditText  serveur
+                EditText serveur = (EditText)alertDialogView.findViewById(R.id.etConnexion);
+                //On met à jour les informations de la musique
+                String serveurAdresse = serveur.getText().toString();
+                connexion(serveurAdresse);
+            }
+        });
+        //Création de la boite de dialogue
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        //Afficher la boite de dialogue
+        alertDialog.show();
     }
 
     /**
@@ -129,15 +149,33 @@ public class LecteurMP3TP extends Activity implements View.OnKeyListener {
         try {
             InitializationData initializationData = new InitializationData();
             initializationData.properties = Ice.Util.createProperties();
-            initializationData.properties.setProperty("Ice.Default.Router", "Glacier2/router:tcp -h shoud.ovh -p 5036");
+            initializationData.properties.setProperty("Ice.Default.Router", "Glacier2/router:tcp -h "+serveurAdresse+" -p 5036");
             initializationData.properties.setProperty("Ice.ACM.Client", "0");
             initializationData.properties.setProperty("Ice.RetryIntervals", "-1");
-            initializationData.properties.setProperty("CallbackAdapter.Router", "Glacier2/router:tcp -h shoud.ovh -p 5036");
+            initializationData.properties.setProperty("CallbackAdapter.Router", "Glacier2/router:tcp -h "+serveurAdresse+" -p 5036");
             //Création du comminucator
             communicator = Ice.Util.initialize(initializationData);
         } catch (Exception e) {
             Log.e("IceStorm erreur = ", e.toString());
         }
+    }
+
+    /**
+     * Méthode permettant de se connecter au serveur
+     * @param serveurAdresse
+     */
+    private void connexion(String serveurAdresse)
+    {
+        //Récupération de l'adresse du serveur
+        this.serveurAdresse = serveurAdresse;
+        //initialisation de ICEStorm
+        iceStorm();
+        //Création du gestionnaire de mp3
+        gestionMP3 = new GestionMP3(communicator,this,serveurAdresse);
+        //Permet de récupérer la liste de musique
+        init();
+        //Initialisation des commandes vocales
+        commandeVocal = new CommandeVocal(this,gestionMP3);
     }
 
 

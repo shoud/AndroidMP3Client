@@ -53,6 +53,8 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
     private IceStorm.TopicPrx topicPrx = null;
     //L'activity principale du programme
     private LecteurMP3TP lecteurMP3TP = null;
+    //L'adress du serveur
+    private String serveurAdresse = null;
 
     /**
      * Permet de renvoyer l'objet permettant d'executer les fonction du serveur
@@ -67,8 +69,10 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
      * Constructeur de la classe GestionMP3
      * Il permet de créer la connexion avec le serveur ICE et Storm.
      */
-    public GestionMP3(Ice.Communicator communicator, LecteurMP3TP lecteurMP3TP)
+    public GestionMP3(Ice.Communicator communicator, LecteurMP3TP lecteurMP3TP, String serveurAdresse)
     {
+        //Récupération de l'adresse du serveur
+        this.serveurAdresse = serveurAdresse;
         //On récupère le communicator pour Storm
         this.communicator = communicator;
         //On récupère l'activity principale
@@ -78,7 +82,7 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
         //Initialisation de ICE
         ic = Ice.Util.initialize();
         //Le lien pour se connecter au serveur ICE
-        base = ic.stringToProxy("SimpleServeurMP3:default -h shoud.ovh -p 10000");
+        base = ic.stringToProxy("SimpleServeurMP3:default -h "+serveurAdresse+" -p 10000");
         //Récupération de l'objet permettant d'executer les fonctions du serveur
         mp3 = Serveur.mp3PrxHelper.checkedCast(base);
         //Création de lobjet permettant de lire les mp3
@@ -128,7 +132,7 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
         try
         {
             //On se connecte à ICEStorm
-            Ice.ObjectPrx obj = communicator.stringToProxy("IceStorm/TopicManager:tcp -h shoud.ovh -p 5038");
+            Ice.ObjectPrx obj = communicator.stringToProxy("IceStorm/TopicManager:tcp -h "+serveurAdresse+" -p 5038");
             //Récupération du topique manageur
             IceStorm.TopicManagerPrx topicManager = IceStorm.TopicManagerPrxHelper.checkedCast(obj);
             //Récupération de l'adaptateur
@@ -193,7 +197,7 @@ public class GestionMP3 implements MediaPlayer.OnPreparedListener {
             //Lancement du stream sur le serveur
             mp3.play();
             //L'url pour lire la musique sur le serveur
-            String url = "http://shoud.ovh:8090/" + token + ".mp3"; // your URL here
+            String url = "http://"+serveurAdresse+":8090/" + token + ".mp3"; // your URL here
             //On dit au lecteur multimedia qu'on lit un stream
             mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
             //On met le lien de la musique à lire
